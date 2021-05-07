@@ -1,0 +1,135 @@
+
+html, body {
+  height: 90%;
+  margin: 0;
+  padding: 0;
+}
+#map {
+  height:75%;
+}
+.button1 {
+  background-color:#26a69a;
+  color: white;
+  border: 2px solid #66CDAA;
+  border-radius: 5px;
+}
+
+.button1:hover {
+  background-color:#66CDAA;
+  color: white;
+}
+
+ss{
+  font-size: 1.5em;
+  color:#0097a7;
+}
+aa{
+  font-size: 1.8em;
+  color:#D56D6D ;
+}
+
+hr.style-two {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+}
+/* span:target */#tab-1:target,
+#tab{
+  width: 100%;
+  height: auto;
+  background: #26a69a ;
+  border: solid 1px white ;
+}
+/* 頁籤ul */
+#tab>ul{
+overflow: hidden;
+margin: 0;
+padding: 10px 20px 0 20px;
+}
+
+#tab>ul>li{
+list-style-type: none;
+}
+
+#tab>ul>li>a{
+text-decoration: none;
+font-size: 25px;
+color: #004d40 ;
+float: left;
+padding: 10px;
+margin-left: 5px;
+}
+
+/*頁籤div內容*/
+#tab>div {
+  clear:both;
+  padding:0 15px;
+  height:0;
+  overflow:hidden;
+  visibility:hidden;
+  -webkit-transition:all .4s ease-in-out;
+  -moz-transition:all .4s ease-in-out;
+  -ms-transition:all .4s ease-in-out;
+  -o-transition:all .4s ease-in-out;
+  transition:all .4s ease-in-out;
+}
+
+/* span:target */
+#tab-1:target,
+#tab-2:target,
+#tab-3:target,
+#tab-4:target{
+  border: solid 1px white;
+}
+
+/*第一筆的底色*/span:target ~ #tab > ul li:first-child a {
+ background:#26a69a;
+}
+span:target ~ #tab > div:first-of-type {
+visibility:hidden;
+  height:0;
+  padding:0 15px white;
+}
+
+/*頁籤變換&第一筆*/
+span ~ #tab > ul li:first-child a,
+#tab-1:target ~ #tab > ul li a[href$="#tab-1"],
+#tab-2:target ~ #tab > ul li a[href$="#tab-2"],
+#tab-3:target ~ #tab > ul li a[href$="#tab-3"],
+#tab-4:target ~ #tab > ul li a[href$="#tab-4"] {
+  background: #fff;
+}
+
+/*頁籤內容顯示&第一筆*/span ~ #tab > div:first-of-type,
+#tab-1:target ~ #tab > div.tab-content-1,
+#tab-2:target ~ #tab > div.tab-content-2,
+#tab-3:target ~ #tab > div.tab-content-3,
+#tab-4:target ~ #tab > div.tab-content-4 {
+visibility:visible;
+  height:90%;
+  background: #fff;
+}
+
+
+#location_no {
+  padding:10px;
+  margin-bottom:5px;
+  width:50%;
+  float:right;
+}
+#sentMeetBtn{
+  cursor: pointer;
+  font-size: 30px;
+  background-color: #3EAC9E;
+  width:  50%;
+  float: right;
+  border-radius: 10px;
+  right: 10px;
+  font-weight: bold;
+  color:white;
+  height:40px;
+  border:3px
+}
+.bb:active{
+  background-color: red;
+}
