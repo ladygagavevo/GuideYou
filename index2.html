@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>GuideYou Customer</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script src="jquery-1.11.0.min.js"></script>
+<script type="text/javascript">
+      $(document).ready(function(){
+    $(".flip").click(function(){
+      $(".panel").slideToggle("slow");
+    },getInfo());
+    });
+  </script>
+
+
+  <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyAke2WlnbKKYkn2z8igaG1R6Q-VJQmqxHM",
+      authDomain: "guideyout-d9ecf.firebaseapp.com",
+      databaseURL: "https://guideyout-d9ecf.firebaseio.com",
+      projectId: "guideyout-d9ecf",
+      storageBucket: "guideyout-d9ecf.appspot.com",
+      messagingSenderId: "93700300799"
+    };
+    firebase.initializeApp(config);
+  </script>
+
+  <script>
+
+  function getInfo(){
+    // console.log('p:');
+    var firebaseRef = firebase.database().ref();
+
+    // str +='</br>'+'</br>'+'<div style="width:50px;height:50px;line-height:50px;border:2px solid #004d40;border-radius: 50px;">'+'Day:'+messageText2+'</div>'+'</br>';
+    var info = firebase.database().ref('company/tourment_4');
+      info.once('value').then(function(snapshot) {
+          // console.log('p:');
+          postinfo = {
+          na: snapshot.val().name,
+          p: snapshot.val().people.leader.name,
+          num: snapshot.val().people.leader.number,
+          pic: snapshot.val().people.leader.gender,
+          }
+        var sex = postinfo.pic;
+        var pic;
+        if (sex == 'Male'){
+          pic = "<img src = 'images/man.png'>";
+        }else{
+          pic = "<img src = 'images/woman.png'>";
+        }
+        str1 = "<center>"  + "Trip in " + postinfo.na +  " !</center>";
+        str2 = "<br>" + pic + "<br>" +  "Hi! I am " + "<span class='white'>" + postinfo.p + "</span>" + ", I'm your guide!" +  "<br>" +
+        "If you have any question, please call: " + "<span class='white'>" +  postinfo.num  + "</span>" + "<br>" + "Have a nice trip with GuideYou!" ;
+
+         // var div = document.getElementById("textDiv");
+        var tripnameDiv = document.getElementById("tripname");
+        var nestedDiv = document.getElementById("nested");
+        // var guidenumDiv = document.getElementById("gnum");
+          tripnameDiv.innerHTML = str1;
+          nestedDiv.innerHTML = str2;
+
+
+          // var text = "[" + div.textContent + "]";
+      }
+      );
+  }
+  </script>
+<link rel="Shortcut Icon" type="image/x-icon" href="world1.png" />
+
+
+</head>
+
+<style>
+body{
+  background-color: #D7D0C8;
+  opacity: 50%;
+}
+a {
+    color:white;
+    text-decoration:none ! important;
+}
+
+h5{
+  font-family:Microsoft JhengHei;
+  font-weight: bold;
+}
+
+
+
+div.panel,p.flip
+{
+margin:0px;
+padding:5px;
+text-align:center;
+background:#EBD4CB;
+border:solid 0px #DE6C83;
+}
+div.panel
+{
+height:200px;
+display:none;
+}
+</style>
+<body>
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="#" class="brand-logo"><img src="images/logo1.png" width="170" height="65"></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="memberDistance.html">集合地點</a></li>
+        <li><a href="new5.html">行程</a></li>
+        <li><a href="guidespot.html">景點導覽</a></li>
+        <li><a href="mem.html">聯絡導遊</a></li>
+        <li><a href="beacon1.html"><font color="#FF8E72">跟隨小天使</font></a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="memberDistance.html">集合地點</a></li>
+        <li><a href="new5.html">行程</a></li>
+        <li><a href="guidespot.html">景點導覽</a></li>
+        <li><a href="mem.html">聯絡導遊</a></li>
+        <li><a href="beacon1.html">跟隨小天使</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+
+  <!-- <div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <br><br>
+        <h1 class="header center teal-text text-lighten-2">Parallax Template</h1>
+        <div class="row center">
+          <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
+        </div>
+        <div class="row center">
+          <a href="http://materializecss.com/getting-started.html" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Get Started</a>
+        </div>
+        <br><br>
+
+      </div>
+    </div>
+    <div class="parallax"><img src="background1.jpg" alt="Unsplashed background img 1"></div>
+  </div> -->
+ <div class="col s6 m4" style="background-color:#DDC8C4;padding:10px;margin-bottom:5px;" >
+    <!-- <div class="icon-block">
+        <h2 class="row center"><i class="material-icons"><img src="earth.png"></i></h2>
+        <h5 class="row center" id="info">顯示團名</h5>
+    </div> -->
+
+        <p class="flip"><img src="images/earth.png"></p>
+        <p class="flip" id="tripname"></p>
+       <div class="panel" id="nested">
+
+        <div id="nested"></div>
+
+       </div>
+
+
+
+
+
+
+
+  </div>
+
+      <!-- <br></br> -->
+      <div class="col s6 m4" style="background-color:#FFAF87;padding:10px;margin-bottom:5px;" href="guideDistance.html">
+        <div class="icon-block">
+          <a href="memberDistance.html">
+            <h2 class="row center"><i class="material-icons">settings_input_antenna</i></h2>
+            <h5 class="row center">集合</h5>
+          </a>
+          </div>
+
+      </div>
+
+      <!-- <div class="col s6 m4" style="background-color:#FF8E72;padding:10px;margin-bottom:5px;" href="guideDistance.html">
+        <div class="icon-block">
+          <a href="rollcall.html">
+            <h2 class="row center"><i class="material-icons">check_box</i></h2>
+            <h5 class="row center">roll</h5>
+          </a>
+        </div>
+      </div> -->
+
+      <div class="col s12 m4" style="background-color:#FF8E72;padding:10px;margin-bottom:5px;">
+        <div class="icon-block">
+          <a href="new5.html">
+          <h2 class="row center"><i class="material-icons">schedule</i></h2>
+          <h5 class="row center">行程</h5>
+        </a></div>
+      </div>
+
+      <div class="col s12 m4" style="background-color:#DAA588;;padding:10px;margin-bottom:5px;">
+        <div class="icon-block">
+          <a href="beacon1.html">
+          <h2 class="row center"><i class="material-icons">face</i></h2>
+          <h5 class="row center">跟隨小天使</h5>
+        </a></div>
+      </div>
+
+      <div class="col s12 m4" style="background-color:#ffab40 ;padding:10px;margin-bottom:5px;">
+        <div class="icon-block">
+          <a href="cusspot.html">
+          <h2 class="row center"><i class="material-icons">developer_mode</i></h2>
+          <h5 class="row center">同步導覽</h5>
+        </a></div>
+      </div>
+
+      <div class="col s12 m4" style="background-color:#ffcc80 ;padding:10px;margin-bottom:5px;">
+        <div class="icon-block">
+          <a href="mem.html">
+            <h2 class="row center"><i class="material-icons">chat</i></h2>
+          <h5 class="row center">與導遊聊聊</h5>
+        </a></div>
+      </div>
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+
+  </body>
+</html>

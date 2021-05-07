@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>
+      <title>BT</title>
+      <script src="sweetalert/dist/sweetalert.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="sweetalert/dist/sweetalert.css">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <!-- CSS  -->
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <style type="text/css">
+            #app {
+                text-align: center;
+                font-size: 20px;
+            }
+            .button-border-set {
+              -moz-box-shadow: none;
+              -webkit-box-shadow: none;
+              box-shadow: none;
+              -moz-transition-property: all;
+              -o-transition-property: all;
+              -webkit-transition-property: all;
+              transition-property: all;
+              -moz-transition-duration: 0.3s;
+              -o-transition-duration: 0.3s;
+              -webkit-transition-duration: 0.3s;
+              transition-duration: 0.3s;
+              color: #FF7F51;
+              border: 2px solid #FF7F51;
+              background: none;
+              text-shadow: none; }
+        </style>
+        <link rel="stylesheet" href="css/buttons.css">
+      	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+      	<script type="text/javascript" src="js/buttons.js"></script>
+        <script>
+
+          $(document).ready(function(){
+        $(window).ready(function() { // 確認整個頁面讀取完畢再將這三個div隱藏起來
+            $("#status").fadeOut();
+               $("#loading_txt").fadeOut();
+            $("#preloader").delay(350).fadeOut("slow");
+           })
+         });
+          </script>
+        <script>
+          function showBeacon(){
+              swal({
+            title:"請開啟<span style='color:#26A59A'>藍芽<span>",
+            text:"開始使用<span style='color:#26A59A'>跟隨小天使</span>!",
+            imageUrl:"images/tap.png",
+            html:true
+            });
+          }
+        </script>
+        <script>
+            $(document).ready(function(){
+          $(window).load(showBeacon())
+           });
+        </script>
+
+    </head>
+    <body>
+          <nav class="white" role="navigation">
+            <div class="nav-wrapper container">
+              <h id="logo-container" href="#" class="brand-logo"><img src="images/logo1.png" width="170" height="65"></h>
+              <ul class="right hide-on-med-and-down">
+                <li><a href="index.html" onclick="TAT()">首頁</a></li>
+                <li><a onclick="TAT()">回上一頁</a></li>
+              </ul>
+
+              <ul id="nav-mobile" class="side-nav">
+                <li><a href="index.html" onclick="TAT()">首頁</a></li>
+                <li><a onclick="TAT()">回上一頁</a></li>
+              </ul>
+              <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+            </div>
+          </nav>
+        <br>
+
+
+        <div id="wrapper">
+
+        <div><h5 class="row center"><img src="images/angelll.gif"></h5></div>
+      	<center>Hi ! 您需要幫助嗎 ?<br><br></center>
+
+        <div id="app"></div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="index.js"></script>
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="js/materialize.js"></script>
+        <script src="js/init.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAke2WlnbKKYkn2z8igaG1R6Q-VJQmqxHM",
+    authDomain: "guideyout-d9ecf.firebaseapp.com",
+    databaseURL: "https://guideyout-d9ecf.firebaseio.com",
+    projectId: "guideyout-d9ecf",
+    storageBucket: "guideyout-d9ecf.appspot.com",
+    messagingSenderId: "93700300799"
+  };
+  firebase.initializeApp(config);
+function TAT(){
+
+  stop();
+
+//alert("here");
+}
+</script>
+
+    </body>
+</html>

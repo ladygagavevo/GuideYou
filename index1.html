@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Parallax Template - Materialize</title>
+
+  <!-- CSS  -->
+  <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/> -->
+  <!-- CSS  -->
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+
+
+<style>
+
+a {
+    color:black;
+    text-decoration:none ! important;
+}
+
+h5{
+  font-family:Microsoft JhengHei;
+  font-weight: bold;
+}
+yes{
+  border-radius: 10px;
+  border:5px #00bfa5 solid;
+  padding:10px;
+  overflow: auto;
+}
+
+#preloader {
+/*   這是整個會蓋住畫面的底色色塊  */
+ position: fixed;
+ width: 100%;
+ height: 100%;
+ left: 0%;
+ top: 0%;
+ background-color: #f4f4f4;
+ z-index: 3002
+}
+
+#status {
+/*   這是中間loading的gif坐標css,我們盡量讓他畫面置中  */
+ position: fixed;
+ width: 218px;
+ height: 419px;
+ margin-left: -109px;
+ margin-top: -110px;
+ left: 50%;
+ top: 50%;
+ background-color: #f4f4f4
+}
+
+
+#loading_txt {
+/*   這是讀取icon旁邊的文字區塊，樣式可以自己定義*/
+ font-size: 14px;
+ position: fixed;
+ margin-left: -40px;
+ margin-top: -12px;
+ left: 50%;
+ top: 50%
+}
+
+
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+
+  $(document).ready(function(){
+$(window).ready(function() { // 確認整個頁面讀取完畢再將這三個div隱藏起來
+    $("#status").fadeOut();
+       $("#loading_txt").fadeOut();
+    $("#preloader").delay(350).fadeOut("slow");
+   })
+ });
+  </script>
+
+<body style="background-color: #F4E9CD">
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
+
+<div id="preloader">
+  <div class="progress">
+      <div class="indeterminate"></div>
+  </div>
+   </div>
+
+
+
+
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="#" class="brand-logo"><img src="images/logo1.png" width="170" height="65"></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="guideDistance.html">設定集合地點</a></li>
+        <li><a href="revisebon.html">成員所在地點</a></li>
+        <li><a href="demo.html">景點介紹</a></li>
+        <li><a href="rollcall.html">點名</a></li>
+        <li><a href="new 4.html">行程</a></li>
+        <li><a href="66666.html">成員</a></li>
+        <li><a href="chatlist.html">聯絡成員</a></li>
+        <li><a href="lost.html" >脫隊團員</a></li>
+		 <li><a href="nowifi.html" >脫隊團員(離線版)</a></li>
+          <!-- <img src="https://si.wsj.net/public/resources/images/ON-CF145_trump0_M_20170721133023.jpg" style="max-width: 30%; "> -->
+      <li><a href="badges.html">Components</a></li>
+      <li><a href="collapsible.html">JavaScript</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="guideDistance.html">設定集合地點</a></li>
+        <li><a href="revisebon.html">成員所在地點</a></li>
+        <li><a href="demo.html">景點介紹</a></li>
+        <li><a href="rollcall.html">點名</a></li>
+        <li><a href="new 4.html">行程</a></li>
+        <li><a href="66666.html">成員</a></li>
+        <li><a href="chatlist.html">聯絡成員</a></li>
+        <li><a href="lost.html" >脫隊團員</a></li>
+		<li><a href="nowifi.html" >脫隊團員(離線)</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+
+  </nav>
+
+  <!-- <div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <br><br>
+        <h1 class="header center teal-text text-lighten-2">Parallax Template</h1>
+        <div class="row center">
+          <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
+        </div>
+        <div class="row center">
+          <a href="http://materializecss.com/getting-started.html" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Get Started</a>
+        </div>
+        <br><br>
+
+      </div>
+    </div>
+    <div class="parallax"><img src="background1.jpg" alt="Unsplashed background img 1"></div>
+  </div> -->
+
+
+<br>
+  <div class="col s12 m8 offset-m2 l6 offset-l3">
+          <div style="color:#93A392">
+              <div class="row center">
+            <img src="http://emilcarlsson.se/assets/mikeross.png" alt="" class="circle" style="width:50%" data-toggle="collapse" data-target="#demo" >
+            <div id="demo" class="collapse">
+              <h2 style="font-weight: bold;font-family:Microsoft JhengHei;">以色列</h2><br>
+              導遊：Bob<br>
+              旅行社：雄獅<br>
+              個人代號：01001
+            </div>
+              </div>
+            </div>
+              </div>
+
+      <!-- <br></br> -->
+
+
+
+
+
+
+
+      <div class="col s12"style="background-color:#77ACA2;padding:10px;margin-bottom:8px;overflow:auto;" href="guideDistance.html">
+        <div class="icon-block" >
+          <a href="guideDistance.html">
+            <h2 class="row center"><i class="material-icons">settings_input_antenna</i></h2>
+            <h5 class="row center" style="font-family:Microsoft JhengHei;">集合時間地點</h5>
+          </a>
+        </div>
+      </div>
+
+
+
+
+      <div class="col s6" style="background-color:#9DBEBB;padding:10px;margin-bottom:10px;width:50%;float:left;overflow:auto;" href="guideDistance.html">
+        <div class="icon-block">
+          <a href="rollcall.html">
+            <h2 class="row center"><i class="material-icons">check_box</i></h2>
+            <h5 class="row center">點名</h5>
+          </a>
+        </div>
+      </div>
+      <div class="col s6" style="background-color:#bcaaa4 ;padding:10px;margin-bottom:10px;width:50%;float:right;overflow:auto;" href="revisebon.html">
+        <div class="icon-block">
+          <a href="revisebon.html">
+            <h2 class="row center"><i class="material-icons">location_on</i></h2>
+            <h5 class="row center">團員位置</h5>
+          </a>
+        </div>
+      </div><br>
+      <div class="col s6" style="background-color:#00838f;padding:10px;padding:10px;margin-bottom:10px;width:50%;float:left;overflow:auto;" href="guidespot.html">
+        <div class="icon-block">
+          <a href="guidespot.html">
+          <h2 class="row center"><i class="material-icons">developer_mode</i></h2>
+            <h5 class="row center">同步導覽</h5>
+          </a>
+        </div>
+      </div>
+      <div class="col s6" style="background-color:#F2C57C;padding:10px;margin-bottom:10px;width:50%;float:right;overflow:auto;" href="lost.html">
+        <div class="icon-block">
+          <a href="lost.html">
+            <h2 class="row center"><i class="material-icons">directions_walk</i></h2>
+            <h5 class="row center">脫隊團員</h5>
+          </a>
+        </div>
+      </div>
+
+
+
+      <div class="col s6" style="background-color:#66CDAA;padding:10px;margin-bottom:8px;width:50%;float:left;overflow:auto;">
+        <div class="icon-block">
+          <a href="new 4.html">
+          <h2 class="row center"><i class="material-icons">schedule</i></h2>
+          <h5 class="row center">行程</h5>
+        </a></div>
+      </div>
+
+      <div class="col s6" style="background-color:#468189;padding:10px;margin-bottom:8px;width:50%;float:right;overflow:auto;">
+        <div class="icon-block">
+          <a href="66666.html">
+          <h2 class="row center"><i class="material-icons">person</i></h2>
+          <h5 class="row center">成員名單</h5>
+        </a></div>
+      </div>
+
+      <div class="col s12" style="background-color:#a1887f;padding:10px;margin-bottom:8px;margin-top:185px;overflow:auto;" href="revisebon.html">
+        <div class="icon-block">
+          <a href="chatlist.html">
+          <h2 class="row center"><i class="material-icons">chat</i></h2>
+            <h5 class="row center">聊天室</h5>
+          </a>
+        </div>
+      </div>
+
+
+
+
+      <!-- <div class="col s12 m4" style="background-color:#8FBC8F;;padding:10px;margin-bottom:5px;">
+        <div class="icon-block">
+          <h2 class="row center"><i class="material-icons">settings</i></h2>
+          <h5 class="row center">setting</h5></div>
+      </div> -->
+
+  <!--<footer class="page-footer teal">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Company Bio</h5>
+          <p class="grey-text text-lighten-4">導遊第一個UI.</p>
+
+
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Settings</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Connect</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+      </div>
+    </div>
+  </footer>-->
+
+
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+
+  </body>
+</html>

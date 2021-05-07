@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>tour</title>
+
+  <!-- CSS  -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link rel="stylesheet" href="css/buttons.css">
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+  <script type="text/javascript" src="js/buttons.js"></script>
+</head>
+
+<style>
+a {
+    color:black;
+    font-size: 30px;
+    font-weight:800;
+}
+
+f {
+　font-family:sans-serif;
+  font-size:20px;
+  color: #004d40;
+  font-family:Microsoft JhengHei;
+
+}
+
+c{
+  font-size:1.5em;
+  color: #004d40;
+  font-family:Microsoft JhengHei;
+  font-weight: bold;
+
+}
+
+yes{
+
+    white-space: nowrap;
+    background-color:  #ffab40 ;
+    border-radius: 10px;
+    border:solid 2px  #ffab40 ;
+    border-radius: 10px 10px 0px 0px ;
+    display:flex;
+    margin-left:10px;
+    justify-content:center;
+    align-items:center;
+    margin-right:10px;
+}
+
+/* hr{
+  border: : solid  2px #009688 ;
+  width: 15px;
+} */
+
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<body>
+
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="#" class="brand-logo"><img src="images/logo1.png" width="170" height="65"></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="new%204.html">旅遊行程</a></li>
+        <li><a href="index2.html">回到上一頁</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="new 4.html">旅遊行程</a></li>
+        <li><a href="index2.html">回到上一頁</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+<br>
+            <!-- <h5 class="row center"style="color:#009688 teal">code...</h5>
+     <div class="row">
+     <div class="row">
+       <div class="input-field col s12">
+         <input id="text1"  class="validate">
+
+       </div>
+     </div>
+ </div> -->
+
+ <!-- <div class="col s12">
+        <h5 class="row left" style="color:#004d40">code...  </h5>
+          <div class="input-field inline">
+            <input id="text1" class="validate">
+          </div>
+        </div> -->
+
+      	  <div class="input-field col s12" style="padding:10px;margin-bottom:5px;" >
+          <div class="icon-block">
+              <h5 class="row left" style="color:#e65100;font-family:Microsoft JhengHei;font-weight: bold;" >請選擇日期</h5>
+         <select id="text2" class="browser-default">
+   <option value="1">6月13日</option>
+   <option value="2">6月14日</option>
+   <option value="3">6月15日</option>
+   <option value="4">6月16日</option>
+     </select>
+          </div></div>
+
+
+
+
+            <!-- <button type="button" id="submitBtn" onclick="submitClick()">submit</button> -->
+<!-- <span class="button-wrap" style="float:right;"><a class="button button-pill button-edit" id="submitBtn" style="float:right;height:35px;font-size:25px;" onclick="submitClick()">Check it out!</a></span> -->
+
+<span  style="float:right;"><a class="waves-effect waves-light btn-large" id="submitBtn"style="float:right;height:35px;font-size:20px;font-family:Microsoft JhengHei;font-weight: bold;height:50px;background-color:#f57c00;margin:15px;text-decoration:none;" onclick="submitClick()" >SUBMIT</a></span>
+
+
+
+<!-- <div class="container">
+  <yes class="btn btn-info" data-toggle="collapse" data-target="#demo">Simple collapsible</yes>
+  <div id="demo" class="collapse">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </div>
+</div> -->
+
+
+
+
+<div id="nested"></div>
+
+
+<script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAke2WlnbKKYkn2z8igaG1R6Q-VJQmqxHM",
+    authDomain: "guideyout-d9ecf.firebaseapp.com",
+    databaseURL: "https://guideyout-d9ecf.firebaseio.com",
+    projectId: "guideyout-d9ecf",
+    storageBucket: "guideyout-d9ecf.appspot.com",
+    messagingSenderId: "93700300799"
+  };
+  firebase.initializeApp(config);
+</script>
+
+<script>
+// var mainText = document.getElementById("text1");
+var mainText2 = document.getElementById("text2");
+var submitBtn = document.getElementById("submitBtn");
+
+
+function submitClick(){
+var firebaseRef = firebase.database().ref();
+// var messageText = mainText.value;
+var messageText2 = mainText2.value;
+var xx=1; var str= ' ';
+
+var x=1;
+str += '</br>'+'</br>'+'</br>'+'</br>';
+// str +='</br>'+'</br>'+'<div style="width:50px;height:50px;line-height:50px;border:2px solid #004d40;border-radius: 50px;">'+'Day:'+messageText2+'</div>'+'</br>';
+
+var fuckstring
+for(var i=1;i<6;i++){
+var fuck = firebase.database().ref('company/tourment_'+4+'/schedule/day_'+messageText2+'/day_place_'+i);
+  fuck.once('value').then(function(snapshot) {
+  // console.log('p:');
+  postfuck = {
+  des: snapshot.val().destription,
+  na: snapshot.val().name,
+  ty: snapshot.val().type,
+  }
+
+    str += '<yes>'+'<c>'+x+'</c>'+'</yes>';
+    str += '<div style="border-radius: 0px 0px 10px 10px;border:2px #ffab40  solid; padding:10px; margin-right:10px;margin-left:10px;">'+'<a>'+postfuck.na+'</a>'+'</br>'+'<hr style="border:solid  2px #ef6c00 ;">';
+          str += '<f>'+postfuck.des+'</f>'+'</br>';
+          str += 'type: '+postfuck.ty+'</div>'+'</br>';
+x=x+1;
+ // var div = document.getElementById("textDiv");
+var nestedDiv = document.getElementById("nested");
+  nestedDiv.innerHTML = str;
+
+  // var text = "[" + div.textContent + "]";
+  }
+  );
+}
+}
+
+
+</script>
+
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="js/materialize.js"></script>
+<script src="js/init.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>tour</title>
+
+  <!-- CSS  -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+  <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyAke2WlnbKKYkn2z8igaG1R6Q-VJQmqxHM",
+      authDomain: "guideyout-d9ecf.firebaseapp.com",
+      databaseURL: "https://guideyout-d9ecf.firebaseio.com",
+      projectId: "guideyout-d9ecf",
+      storageBucket: "guideyout-d9ecf.appspot.com",
+      messagingSenderId: "93700300799"
+    };
+    firebase.initializeApp(config);
+  </script>
+  	<script>
+  	// var mainText = document.getElementById("text1");
+
+  var submitBtn = document.getElementById("submitBtn");
+
+
+  function submitClick(){
+  	var firebaseRef = firebase.database().ref();
+  	// var messageText = mainText.value;
+  	var xx=1;
+  	var str= ' ';
+  	var x=1;
+
+  	var fuckk = firebase.database().ref('company/tourment_'+4+'/people/leader/');
+  	fuckk.once('value').then(function(snapshot) {
+  		console.log('p:');
+  		postfuckk = {
+  				dess: snapshot.val().age,
+  				naa: snapshot.val().name,
+  			}
+
+  			str += '<br><center><h4>'+'Leader:'+postfuckk.naa+'</h4></center></hr>';
+  		}
+  	);
+
+    firebase.database().ref('company/tourment_4/people/customers/').once('value',function(snapshot){
+      //var numChildren = snapshot.numChildren();
+      //console.log('num is'+numChildren);
+      for(var i=1;i<=5;i++){
+      var fuck = firebase.database().ref('company/tourment_'+4+'/people/customers/'+i);
+      fuck.once('value').then(function(snapshot) {
+        console.log('p:');
+        postfuck = {
+            des: snapshot.val().age,
+            na: snapshot.val().name,
+            eat: snapshot.val().eat,
+            tel: snapshot.val().phone,
+            pic: snapshot.val().photo,
+          }
+
+          // str += '<yes>'+postfuck.na+'</yes>';
+          str += '<no>'+"<img src='"+ postfuck.pic +"'width='100' height='100' margin='10px' style='float:left;' class='circle'>"+
+              '<gg><ff>'+postfuck.na+'</ff><br>'+
+               '-Age:'+postfuck.des+
+               '<br>-Eating Habit: '+postfuck.eat+
+               '<br>-Tel: '+postfuck.tel+''+'</gg></no><hr>';
+
+          x=x+1;
+
+          var div = document.getElementById("textDiv");
+          var nestedDiv = document.getElementById("nested");
+          nestedDiv.innerHTML = str;
+          var text = "[" + div.textContent + "]";
+        }
+      );
+
+    }
+
+    });
+
+  }
+  </script>
+</head>
+
+<style>
+.circle {
+    border-radius: 50%;
+    margin: 10px;
+}
+
+
+a {
+    color:black;
+}
+
+hr{
+  border: solid 1px green;
+  width: 80%;
+}
+ff{
+  color:black;
+  font-size:20px;
+  vertical-align:text-top;
+  font-weight:bold;
+}
+
+gg{
+  color:#004d40;
+  font-size: 15px;
+  vertical-align:text-top;
+  font-weight:bold;
+  letter-spacing: 1.5px;　
+}
+
+
+no{
+  border-radius: 10px 10px 10px 10px;
+ background-color: white;
+  /* border:4px #00bfa5 solid; */
+  border:4px white solid;
+  padding:10px;
+  margin-right:5px;
+  margin-left:5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display:flex;
+  justify-content:;left;
+  align-items:center;
+}
+
+
+</style>
+<body>
+
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      <h id="logo-container" href="#" class="brand-logo"><img src="images/logo1.png" width="170" height="65"></h>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="66666.html">團員名單</a></li>
+        <li><a href="index1.html">回到導遊功能頁</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="66666.html">團員名單</a></li>
+        <li><a href="index1.html">回到導遊功能頁</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+<br>
+
+
+<div id="wrapper">
+
+
+
+
+
+  <!-- <div class="col s12"> -->
+         <!-- <h5 class="row left" style="color:#004d40">code...  </h5>
+           <div class="input-field inline">
+             <input id="text1" class="validate">
+           </div> -->
+           <script>
+           submitClick()
+         </script>
+  <!-- </div> -->
+			<!-- <button class="waves-effect waves-light btn" id="submitBtn" style="float:right;height:40px;font-size:20px;" onclick="submitClick()">submit</button> -->
+
+
+
+
+
+
+		<div id="textDiv">
+			<div id="nested"></div>
+		</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="js/materialize.js"></script>
+<script src="js/init.js"></script>
+</body>
+</html>

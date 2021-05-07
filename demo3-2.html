@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js – The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/night.css" id="theme">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	  	<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+
+
+
+
+
+
+	<style>
+	*{
+		font-family: "微軟正黑體";
+	}
+
+	@media (min-width: 320px) and (max-width: 480px) {
+
+	#momo{
+		display: block;
+		top: -300px;
+	}
+
+	 }
+
+	#size{
+		font-size: 2em;
+		color: #f4e842;
+	}
+
+	h{
+		font-size: 1.3em;
+		letter-spacing: 3px;
+		background-image: url(https://vignette.wikia.nocookie.net/mint524/images/d/d7/Sky.jpg/revision/latest?cb=20160706152654);
+	}
+
+	y{
+	font-size: 30px;
+	color:white;
+	line-height:0.5px;
+	padding: 0px;
+}
+#start{
+	border-radius: 100%;
+	border: solid 2px white;
+	width: 500px;
+	height: 500px;
+	margin:0px auto;
+	position: absolute;
+}
+#start h2{
+	 transform:translateY(100%);
+}
+</style>
+
+
+
+
+	<body>
+		<div class="back">
+			<a href="cusspot.html">
+				<i class="material-icons" style="color:white;cursor:pointer;">reply</i>
+			</a>
+		</div>
+	<div class="reveal" style="height: 95%;position:absolute;">
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<div class="reveal">
+					<!-- Any section element inside of this container is displayed as a slide -->
+					<div class="slides" id="slides">
+						<section data-markdown>
+							<div id="start">
+								<h2>INTRO/</h2><h2>中興</h2>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+		<!--引用FIREBASE-->
+		<script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
+		<script>
+			// Initialize Firebase
+		var config = {
+			apiKey: "AIzaSyAke2WlnbKKYkn2z8igaG1R6Q-VJQmqxHM",
+		authDomain: "guideyout-d9ecf.firebaseapp.com",
+		databaseURL: "https://guideyout-d9ecf.firebaseio.com",
+		storageBucket: "guideyout-d9ecf.appspot.com"
+		};
+		firebase.initializeApp(config);
+
+		var ref = firebase.database().ref("intro/NCHU");
+
+		var i = 0 ;
+		//改成動態新增section
+		ref.once('value', function(snapchat) {
+			snapchat.forEach(function(item){
+				i++;
+				console.log(item.val());
+				document.getElementById('slides').innerHTML+=
+				'<section id="momo"><h4>'+item.val().name+
+				'</h4><img width="auto" height="300px" src="'+item.val().photo+'" id="downloadedImg'+i+'"></img><br><y>'+item.val().detail+'</y></section>';
+				//recArray.push(item.val().name);
+			});
+		});
+
+		// More info https://github.com/hakimel/reveal.js#configuration
+		Reveal.initialize({
+			controls: true,
+			progress: true,
+			history: true,
+			center: true,
+			transition: 'slide', // none/fade/slide/convex/concave/zoom
+			// More info https://github.com/hakimel/reveal.js#dependencies
+			dependencies: [
+				{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+				{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+				{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+				{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+				{ src: 'plugin/search/search.js', async: true },
+				{ src: 'plugin/zoom-js/zoom.js', async: true },
+				{ src: 'plugin/notes/notes.js', async: true }
+			]
+		});
+
+		// Whenever there is a change in slide position, the same will be updated in the client using Reveal.slide() function .
+		firebase.database().ref('slidetest').on("value", function(snapshot) {
+			// if (snapshot.val().autoSlide==0) {
+				// Turn autoSlide off
+				// Reveal.configure({ autoSlide: 0 });
+				Reveal.slide(snapshot.val().currentslideX);
+				// console.log('偵測autoslide==0 播放暫停->設定0秒');
+			// }
+			// Turn autoSlide on
+			// else {
+			// 	Reveal.configure({ autoSlide: 5000 });
+			// 	console.log('偵測autoslide==1 播放繼續->設定5秒');
+			// }
+		});
+		</script>
+	</body>
+</html>

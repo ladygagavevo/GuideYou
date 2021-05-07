@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js – The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/moon.css" id="theme">
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	  	<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+		<!-- Printing and PDF exports -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+
+
+<style>
+
+*{
+	font-family: "微軟正黑體";
+}
+@media (min-width: 320px) and (max-width: 480px) {
+
+
+#momo{
+	display: block;
+	top:-300px;
+}
+
+ }
+
+#size{
+	font-size: 2em;
+	color: #f4e842;
+}
+
+h{
+	font-size: 1.1em;
+	letter-spacing: 3px;
+	background-image: url(http://jmd.im/wp-content/uploads/2017/06/blackx_thumbnail.jpg);
+}
+
+y{
+	font-size: 30px;
+	color:white;
+	line-height:0.5px;
+	padding: 0px;
+}
+#start{
+	border-radius: 100%;
+	border: solid 2px white;
+	width: 500px;
+	height: 500px;
+	margin:0px auto;
+	position: absolute;
+}
+#start h2{
+	 transform:translateY(150%);
+}
+
+</style>
+	<body>
+		<div class="back">
+			<a href="guidespot.html">
+				<i class="material-icons" style="color:white;cursor:pointer;">reply</i>
+			</a>
+		</div>
+		<div class="reveal" style="height: 90%;position:absolute;">
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides" id="slides">
+				<section data-markdown>
+					<div id="start">
+						<h2>GUIDE START</h2>
+					</div>
+				</section>
+			</div>
+		</div>
+
+
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+		<!--引用FIREBASE-->
+		<script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
+		<script>
+			// Initialize Firebase
+		var config = {
+			apiKey: "AIzaSyAke2WlnbKKYkn2z8igaG1R6Q-VJQmqxHM",
+		    authDomain: "guideyout-d9ecf.firebaseapp.com",
+		    databaseURL: "https://guideyout-d9ecf.firebaseio.com",
+				storageBucket: "guideyout-d9ecf.appspot.com"
+			};
+		firebase.initializeApp(config);
+
+		// Create a root reference
+		var storageRef = firebase.storage().ref();
+		// Create a reference to 'mountains.jpg'
+		var mountainsRef = storageRef.child('4adbf33b038233f79e5570adb859fc7c.png');
+		// Create a reference to 'images/mountains.jpg'
+		var mountainImagesRef = storageRef.child('images/4adbf33b038233f79e5570adb859fc7c.png');
+		// While the file names are the same, the references point to different files
+		mountainsRef.name === mountainImagesRef.name            // true
+		mountainsRef.fullPath === mountainImagesRef.fullPath    // false
+
+		//寫入資料
+		var ref = firebase.database().ref("intro/taipei101");
+		ref.set({
+			slide1: {
+				name: 'Petra',
+				photo: 'https://tw.taiwanviptravel.com/wp-content/uploads/2017/10/Al-Khazneh-nightTour-1.jpg',
+				detail:'傳說中絕美的粉紅石頭城佩特拉，位於紅海和死海之間，經典電影法櫃奇兵及變形金剛的拍攝地，歷史可追溯到史前時代。最初是由納巴廷人沙漠商隊所建、位於阿拉伯、埃及、敘利亞與腓尼基之間的交通要塞。古希臘建築與古代東方傳統在這裡交匯相融。是世界上最著名的考古遺址之一。'
+			} ,
+			slide2: {
+				name: 'Treasury',
+				photo: 'https://i2.wp.com/travelwithmikeanna.com/wp-content/uploads/2016/10/DSC_3811.jpg',
+				detail:'之所以稱為Treasury是因為傳說中，埃及法老王追逐以色列人時把寶物藏在這裡。有人相信頂端的圓球裡藏有珍寶，所以拿槍射擊只是岩石雕刻成的裝飾。最後當然沒有找到寶藏，只留下被嚴重破壞的圓球雕像。',
+			} ,
+			slide3: {
+				name: 'Street of Facade',
+				photo: 'https://i1.wp.com/travelwithmikeanna.com/wp-content/uploads/2016/10/DSC_3869.jpg',
+				detail:'透過貿易與外界交流得到的知識，從中擷取設計元素與技巧，再融合民族的風格，創造出千年後還讓世人讚嘆的偉大建築。Street of Facade 非常容易探索。下方墓穴經過長期風化與洪水沖刷後形成的風貌，展示出大自然的力量。'
+			} ,
+			slide4: {
+				name: 'Roman Theater ',
+				photo: 'https://i2.wp.com/travelwithmikeanna.com/wp-content/uploads/2016/10/DSC_3875-1.jpg',
+				detail:'大約於西元前100年建造。整座劇場是從岩石中鑿出來的，蓋好時可容納3.000人。西元106年被併入為羅馬帝國的省份後，羅馬人擴大了劇場的規模，最高可容納8.500人。西元363年的大地震摧毀了許多建物，包括劇場也嚴重的損壞。'
+			}
+		});
+
+		 var i=0;
+		//拿出資料
+		ref.once('value', function(snapchat) {
+			console.log('000');
+			snapchat.forEach(function(item){
+				i++;
+				console.log(item.val());
+				document.getElementById('slides').innerHTML+=
+				'<section id="momo"><h4>'+item.val().name+
+				'</h4><img width="auto" height="300px" src="'+item.val().photo+'" id="downloadedImg'+i+'"></img><br><y>'+item.val().detail+'</y></section>';
+				//recArray.push(item.val().name);
+			});
+			console.log('show h3');
+			//setTimeout(function(){wait2addImg();}, 500);
+		});
+		 //data-markdown
+		console.log('i is='+i);
+		console.log('second');
+		// More info https://github.com/hakimel/reveal.js#configuration
+		//此段要打出來才可以控制並顯示
+		Reveal.initialize({
+			controls: true,
+			progress: true,
+			history: true,
+			center: true,
+			transition: 'slide', // none/fade/slide/convex/concave/zoom
+			// More info https://github.com/hakimel/reveal.js#dependencies
+			dependencies: [
+				{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+				{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+				{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+				{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+				{ src: 'plugin/search/search.js', async: true },
+				{ src: 'plugin/zoom-js/zoom.js', async: true },
+				{ src: 'plugin/notes/notes.js', async: true }
+			]
+		});
+
+		// Basic Write Operations
+	    firebase.database().ref('slidetest').set({
+	    currentslideX : 0,
+	    // currentslideY : 0,
+	    // autoSlide : 0
+	    });
+		// 'slidechanged' event listener to update the firebase JSON whenever there is a change in slide.
+		// This can be further improved to have firebase authentication to restrict slide update only by the presenter.
+
+		//換頁的時候
+		Reveal.addEventListener( 'slidechanged', function( event ) {
+			firebase.database().ref('slidetest').once('value').then(function(snapshot) {
+				// if (snapshot.val().autoSlide==0) {
+					firebase.database().ref('slidetest').set({
+						// autoSlide : snapshot.val().autoSlide,
+						currentslideX : Reveal.getState().indexh,
+						// currentslideY : Reveal.getState().indexv
+					});
+					// console.log('snapshot.val().autoSlide is: ' + snapshot.val().autoSlide);
+				// }
+			});
+		});
+		// Whenever there is a change in slide position, the same will be updated in the client using Reveal.slide() function .
+		firebase.database().ref('slidetest').on("value", function(snapshot) {
+		  Reveal.slide(snapshot.val().currentslideX);
+		});
+
+
+		</script>
+		<script src="jquery-1.11.0.min.js"></script>
+	</body>
+</html>

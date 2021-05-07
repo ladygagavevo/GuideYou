@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js – The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/moon.css" id="theme">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	  	<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+
+
+
+
+
+
+	<style>
+	*{
+		font-family: "微軟正黑體";
+	}
+
+	@media (min-width: 320px) and (max-width: 480px) {
+
+	#momo{
+		display: block;
+		top: -300px;
+	}
+
+	 }
+
+	#size{
+		font-size: 2em;
+		color: #f4e842;
+	}
+
+	h{
+		font-size: 1.3em;
+		letter-spacing: 3px;
+		background-image: url(https://vignette.wikia.nocookie.net/mint524/images/d/d7/Sky.jpg/revision/latest?cb=20160706152654);
+	}
+
+	y{
+	font-size: 30px;
+	color:white;
+	line-height:0.5px;
+	padding: 0px;
+}
+#start{
+	border-radius: 100%;
+	border: solid 2px white;
+	width: 500px;
+	height: 500px;
+	margin:0px auto;
+	position: absolute;
+}
+#start h2{
+	 transform:translateY(100%);
+}
+</style>
+
+
+	<body>
+		<div class="back">
+			<a href="cusspot.html">
+				<i class="material-icons" style="color:white;cursor:pointer;">reply</i>
+			</a>
+		</div>
+		<div class="reveal" style="height: 95%;">
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides" id="slides">
+				<section data-markdown>
+					<div id="start">
+						<h2>GUIDE START</h2>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+		<!--引用FIREBASE-->
+		<script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
+		<script>
+			// Initialize Firebase
+		var config = {
+			apiKey: "AIzaSyAke2WlnbKKYkn2z8igaG1R6Q-VJQmqxHM",
+		    authDomain: "guideyout-d9ecf.firebaseapp.com",
+		    databaseURL: "https://guideyout-d9ecf.firebaseio.com",
+				storageBucket: "guideyout-d9ecf.appspot.com"
+			};
+		firebase.initializeApp(config);
+
+		// Create a root reference
+		var storageRef = firebase.storage().ref();
+		// Create a reference to 'mountains.jpg'
+		var mountainsRef = storageRef.child('4adbf33b038233f79e5570adb859fc7c.png');
+		// Create a reference to 'images/mountains.jpg'
+		var mountainImagesRef = storageRef.child('images/4adbf33b038233f79e5570adb859fc7c.png');
+		// While the file names are the same, the references point to different files
+		mountainsRef.name === mountainImagesRef.name            // true
+		mountainsRef.fullPath === mountainImagesRef.fullPath    // false
+
+		//寫入資料
+		var ref = firebase.database().ref("intro/mei");
+			ref.set({
+				slide1: {
+					name: '高美濕地',
+					photo: 'https://pic.pimg.tw/camille7531/1494225506-1581298011.jpg?v=1494225554',
+	 				detail:'高美濕地面積雖然不大，但同時擁有泥質及沙灘兩種地質，以及與河口沼澤地緊緊繫在一起，而孕育成豐富又多元的溼地生態，目前有台灣最大族群的雲林莞草，由於乾濕混合而成的複雜地形使得生態種類更加豐富，鳥類、魚類、蟹類及其他無脊椎類等生物也在此棲身。',
+				} ,
+				slide2: {
+					name: '高美的招潮蟹',
+					photo: 'http://image.thermaltake.com/News/db/imgs/press/images/TTFUN/20120706/1274135640.jpg',
+					detail:'高美濕地是塊生態保育區，也是很棒的大自然地理教室，這兒住了許多的招潮蟹，當你走過，牠會一溜眼的全部躲到洞裡去，之後再緩慢地慢慢探出頭來，那模樣非常的可愛'
+				} ,
+				slide3: {
+					name: '彈塗魚',
+					photo: 'http://i.epochtimes.com/assets/uploads/2015/09/1509090937362178-600x450.jpg',
+					detail:'常見彈塗魚包括廣東彈塗魚（Periophthalmus cantonensis），又名泥猴、石貼仔、跳跳魚，身長可達10厘米；另一種稱為薄氏大彈塗魚（Boleophthalmus boddarti），又稱大彈塗魚，成長後身長約20厘米；牠不及廣東彈塗魚那樣適應陸上生活，牠只能停留在地面上很短時間。'
+				} ,
+				slide4: {
+					name: '風力發電機 ',
+					photo: 'https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2017/09/14/98/3999065.jpg&x=0&y=0&sw=0&sh=0&sl=W&fw=1050&exp=3600',
+					detail:'  高美自行車道是沿著清水大排、海堤至高美溼地，南起濱海橋、北至高美海堤防汛道路，全長3.3公里，車道旁緊鄰清水大排和高美溼地，除了可以鳥瞰整片高美溼地外，同時也是賞鳥、看夕陽的好地方，未來還可眺望西側海岸正在興建的風力發電機組，是個可以讓遊客旅遊休憩的好地方。'
+				},
+			});
+
+
+		 var i=0;
+
+
+		//拿出資料
+		//拿出資料
+			ref.once('value', function(snapchat) {
+				console.log('000');
+				snapchat.forEach(function(item){
+					i++;
+					console.log(item.val());
+					document.getElementById('slides').innerHTML+=
+					'<section id="momo"><h4>'+item.val().name+
+					'</h4><img width="auto" height="300px" src="'+item.val().photo+'" id="downloadedImg'+i+'"></img><br><y>'+item.val().detail+'</y></section>';
+					//recArray.push(item.val().name);
+				});
+				console.log('show h3');
+				//setTimeout(function(){wait2addImg();}, 500);
+			});
+			 //data-markdown
+			console.log('i is='+i);
+			console.log('second');
+			// More info https://github.com/hakimel/reveal.js#configuration
+			//此段要打出來才可以控制並顯示
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/search/search.js', async: true },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+			// Basic Write Operations
+		    firebase.database().ref('slidetest').set({
+		    currentslideX : 0,
+		    // currentslideY : 0,
+		    // autoSlide : 0
+		    });
+			// 'slidechanged' event listener to update the firebase JSON whenever there is a change in slide.
+			// This can be further improved to have firebase authentication to restrict slide update only by the presenter.
+
+			//換頁的時候
+			Reveal.addEventListener( 'slidechanged', function( event ) {
+				firebase.database().ref('slidetest').once('value').then(function(snapshot) {
+					// if (snapshot.val().autoSlide==0) {
+						firebase.database().ref('slidetest').set({
+							// autoSlide : snapshot.val().autoSlide,
+							currentslideX : Reveal.getState().indexh,
+							// currentslideY : Reveal.getState().indexv
+						});
+						// console.log('snapshot.val().autoSlide is: ' + snapshot.val().autoSlide);
+					// }
+				});
+			});
+			// Whenever there is a change in slide position, the same will be updated in the client using Reveal.slide() function .
+			firebase.database().ref('slidetest').on("value", function(snapshot) {
+			  Reveal.slide(snapshot.val().currentslideX);
+			});
+
+
+			</script>
+			<script src="jquery-1.11.0.min.js"></script>
+		</body>
+	</html>

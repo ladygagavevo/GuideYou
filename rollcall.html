@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>點名</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>rollcall</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+		<style>
+		a {
+		    color:black;
+		    font-size: 30px;
+		    font-weight:800;
+				text-decoration:none ! important;
+		}
+
+
+
+p {
+	border-radius:  10px 10px 10px 10px;
+	border:2px #00796b solid;
+	padding:10px;
+	margin-right:10px;
+	margin-left:10px;
+}
+c{
+ font-size: 2rem;
+float: right;
+color: green;
+}
+v{
+	font-size: 2rem;
+ float: right;
+ color: red;
+}
+		/* hr{
+		  border: : solid  2px #009688 ;
+		  width: 15px;
+		} */
+
+
+		</style>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+  	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyAke2WlnbKKYkn2z8igaG1R6Q-VJQmqxHM",
+	    authDomain: "guideyout-d9ecf.firebaseapp.com",
+	    databaseURL: "https://guideyout-d9ecf.firebaseio.com"
+	  };
+	  firebase.initializeApp(config);
+	</script>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
+<script>
+
+  $(document).ready(function(){
+$(window).ready(function() { // 確認整個頁面讀取完畢再將這三個div隱藏起來
+    $("#status").fadeOut();
+       $("#loading_txt").fadeOut();
+    $("#preloader").delay(350).fadeOut("slow");
+   })
+ });
+  </script>
+	<link rel="stylesheet" href="css/buttons.css">
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" src="js/buttons.js"></script>
+</head>
+<!--判斷距離離集合地點< 10 m ，則顯示抵達。用一個表單列出所有人名字和狀況-->
+
+
+<body>
+
+	<div id="preloader">
+		<div class="progress">
+				<div class="indeterminate"></div>
+		</div>
+		 </div>
+
+
+
+
+	<nav class="white" role="navigation">
+		<div class="nav-wrapper container">
+			<a id="logo-container" href="#" class="brand-logo"><img src="images/logo1.png" width="170" height="65"></a>
+			<ul class="right hide-on-med-and-down">
+				<li><a href="#">Navbar Link</a></li>
+					<!-- <img src="https://si.wsj.net/public/resources/images/ON-CF145_trump0_M_20170721133023.jpg" style="max-width: 30%; "> -->
+			<li><a href="badges.html">Components</a></li>
+			<li><a href="collapsible.html">JavaScript</a></li>
+			</ul>
+
+			<ul id="nav-mobile" class="side-nav">
+				<li><a href="index.html">首頁</a></li>
+        <li><a href="rollcall.html">點名</a></li>
+				<li><a href="index1.html">回到上一頁</a></li>
+			</ul>
+			<a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+		</div>
+	</nav>
+
+<br>
+
+	<div><h5 class="row center"><img src="images/list.png"></h5></div>
+
+	<div class="callList" id= "callList">
+
+		<!--<li class="name" id="name">
+		  <div class="status" id="status"></div>
+		</li>
+		<li class="name">人名
+		  <div class="status">已到</div>
+		</li>-->
+	</div>
+	<script type="text/javascript">
+		rollcall();
+		var nameArr = [];
+		var distanceArr = [];
+		var cus,rd;
+		var geRef;
+		function rollcall(){
+			//先清除
+			document.getElementById('callList').innerHTML='';
+			firebase.database().ref("company/tourment_4/people/customers/count").on('value',function(snapshot){
+				cus = snapshot.val();
+				console.log('cus is ='+cus);
+				for(var i=1;i<=5;i++){
+					//哪個人
+					var cusRef = firebase.database().ref("company/tourment_4/people/customers/"+i);
+					//gether
+					geRef = firebase.database().ref("company/tourment_4/people/customers/"+i+"/gether");
+					console.log(i);
+					cusRef.once('value',function(snapshot){
+						//先顯示姓名 距離 gether
+						console.log(snapshot.val().name+','+snapshot.val().reserve.distance.distance+','+snapshot.val().gether);
+						nameArr.push(snapshot.val().name);
+						distanceArr.push(snapshot.val().reserve.distance.distance);
+					});
+				}
+				setTimeout("wait()",1000);
+				onTime();
+			});
+		}
+
+		function wait(){
+			if(nameArr[cus-1] !== 'undefined') {
+				for(var i=1;i<=5;i++){
+					if(distanceArr[i-1] < 10){
+						//console.log(i);
+						geRef.set(1);
+						console.log(geRef);
+						document.getElementById('callList').innerHTML+='<p id="'+nameArr[i-1]+'">'+nameArr[i-1]+'<c class="material-icons">done</c></p>';
+						//console.log('show 1'+snapshot.val().gether);
+					}else{
+						geRef.set(0);
+						console.log('show 2');
+						document.getElementById('callList').innerHTML+='<p id="'+nameArr[i-1]+'">'+nameArr[i-1]+'<v class="material-icons">clear</v></p>';
+					}
+				}
+			}else{
+				setTimeout("wait()",1000);
+			}
+		}
+
+		function onTime(){
+			console.log('rrrr');
+			for(var i=1;i<=5;i++){
+				console.log('cus is'+ cus);
+				//哪個人
+				var cusRef = firebase.database().ref("company/tourment_4/people/customers/"+i);
+				//gether
+				var geRef = firebase.database().ref("company/tourment_4/people/customers/"+i+"/gether");
+				console.log(i);
+				cusRef.on('value',function(snapshot){
+					//先顯示姓名 距離 gether
+					console.log(snapshot.val().name+','+snapshot.val().reserve.distance.distance+','+snapshot.val().gether);
+					if(snapshot.val().reserve.distance.distance < 10){
+						//console.log(i);
+						geRef.set(1);
+						console.log(geRef);
+						document.getElementById(snapshot.val().name).innerHTML=snapshot.val().name+'<c class="material-icons">done</c>';
+						console.log('name is:'+snapshot.val().name);
+						//console.log('show 1'+snapshot.val().gether);
+					}else{
+						geRef.set(0);
+						console.log('show 2');
+						document.getElementById(snapshot.val().name).innerHTML=snapshot.val().name+'<v class="material-icons">clear</v>';
+						console.log('name is:'+snapshot.val().name);
+					}
+
+				});
+			}
+		}
+
+
+	</script>
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="js/materialize.js"></script>
+	<script src="js/init.js"></script>
+</body>
+</html>

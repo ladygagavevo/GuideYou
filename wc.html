@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>很多氣球</title>
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <!--引入字體-->
+    <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light" rel="stylesheet">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height:80%;
+      }
+      .info {
+        font-size: 30px;
+        box-sizing: border-box;
+        display: inline-block;
+        float: left;
+        background-color: #4db6ac;
+        /* color: #06443F; */
+        /* padding: 0px; */
+        height: 80px;
+        text-align: center;
+      }
+
+      a {
+          color:black;
+          text-decoration:none ! important;
+      }
+
+
+      h4{
+        font-family:Microsoft JhengHei;
+        font-weight: bold;
+
+      }
+
+
+
+      #infoName {
+        /* margin: 0px; */
+        font-weight: 600;
+        width: 40%;
+        padding-left: 10px;
+        text-align: center;
+      }
+
+      #infoDis {
+        /* color: #564256; */
+        letter-spacing: 3px;
+        width: 40%;
+      }
+      #infoSent {
+        width: 20%;
+        height: 80px;
+        background-color: #4db6ac;
+        padding-left: 10px;
+
+      }
+      #infoSent svg {
+        cursor: pointer;
+        position: absolute;
+        width: 100%;
+        height: 80px;
+        stroke: black;
+        stroke-width: 5px;
+        left: 220px;
+      }
+      #infoSent svg circle {
+        fill: white;
+      }
+    </style>
+
+  <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+  <script src="jquery-1.11.0.min.js"></script>
+  <!--地圖相關js-->
+<script type="text/javascript" src="mapiconmaker.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyAke2WlnbKKYkn2z8igaG1R6Q-VJQmqxHM",
+      authDomain: "guideyout-d9ecf.firebaseapp.com",
+      databaseURL: "https://guideyout-d9ecf.firebaseio.com"
+    };
+    firebase.initializeApp(config);
+  </script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script>
+
+    $(document).ready(function(){
+  $(window).ready(function() { // 確認整個頁面讀取完畢再將這三個div隱藏起來
+      $("#status").fadeOut();
+         $("#loading_txt").fadeOut();
+      $("#preloader").delay(350).fadeOut("slow");
+     })
+   });
+    </script>
+
+  </head>
+
+
+
+  <body>
+    <nav class="white" role="navigation">
+      <div class="nav-wrapper container">
+        <a id="logo-container" href="#" class="brand-logo"><img src="images/logo1.png" width="170" height="65"></a>
+        <ul class="right hide-on-med-and-down" >
+          <li><a href="index.html">首頁</a></li>
+          <li><a href="uideDistance.html">設定集合地點</a></li>
+          <li><a href="revisebon.html">成員所在地點</a></li>
+          <li><a href="index1.html">回到導遊功能頁</a></li>
+          <li><a href="badges.html">Components</a></li>
+          <li><a href="collapsible.html">JavaScript</a></li>
+        </ul>
+
+        <ul id="nav-mobile" class="side-nav">
+          <li><a href="index.html">首頁</a></li>
+          <li><a href="guideDistance.html">設定集合地點</a></li>
+          <li><a href="revisebon.html">成員所在地點</a></li>
+          <li><a href="index1.html">回到導遊功能頁</a></li>
+        </ul>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+      </div>
+    </nav>
+    <div id="preloader">
+      <div class="progress">
+          <div class="indeterminate"></div>
+      </div>
+       </div>
+
+    <!-- <nav style="color:#80cbc4">
+      <div class="nav-wrapper" style="color:#80cbc4">
+        <div class="col s12"  style="color:#80cbc4">
+          <a href="index1.html" class="breadcrumb" id="sec1">home</a>
+          <a href="guideDistance.html" class="breadcrumb" id="sec2">setting</a>
+          <a class="breadcrumb" id="sec3">where is my cos</a>
+        </div>
+      </div>
+    </nav> -->
+    <div id="map"></div>
+    <!--出現資訊-->
+    <div class="map"></div>
+    <div class="info" id="infoName"><h4>名字</h4></div>
+    <div class="info" id="infoDis"><h4>距離</h4></div>
+    <i class="medium material-icons" id="infoSent">gps_not_fixed</i>
+    <!-- <div class="info" id="infoSent">
+      <svg viewbox="50 -50 100 100">
+        <line x1="-40" y1="0" x2="40" y2="0"></line>
+        <line x1="0" y1="-40" x2="0" y2="40"></line>
+        <circle cx="0" cy="0" r="20">
+          <animate attributeName="r" dur="2s" values="20;40;20" repeatCount="indefinite"></animate>
+        </circle>
+      </svg>
+    </div> -->
+
+    <script>
+
+ function initMap() {
+   var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 15,
+    center: {lat: 24.121438, lng: 120.675038 }
+   });
+   // var infoWindow = new google.maps.InfoWindow({map: map});
+
+   // Try HTML5 geolocation.
+   if (navigator.geolocation) {
+     navigator.geolocation.getCurrentPosition(function(position) {
+       var pos = {
+         lat: position.coords.latitude,
+         lng: position.coords.longitude
+       };
+
+       // infoWindow.setPosition(pos);
+       // infoWindow.setContent('Location found.');
+       map.setCenter(pos);
+     }, function() {
+       handleLocationError(true, map.getCenter());
+     });
+   } else {
+     // Browser doesn't support Geolocation
+     handleLocationError(false, map.getCenter());
+   }
+
+   //暫時改成第四團
+   var countCusRef = firebase.database().ref("company/tourment_4/people/customers/count");
+   var iconMarker;
+   var aa;
+   var arr = [];
+   $(document).ready(function(){
+    countCusRef.once('value',function(snapshot){
+      var countCus = snapshot.val();
+      console.log(countCus);
+      for(var i=1;i<countCus;i++){
+        firebase.database().ref('company/tourment_4/people/customers/'+i+'/notification').set(0);
+        var cusRef = firebase.database().ref('company/tourment_4/people/customers/'+i);
+        console.log(i);
+        //give them another var t=1
+        var t=1;
+        cusRef.once('value',function(snapshot){
+          //判斷可能超時->紅氣球   沒有-->綠氣球
+          if(snapshot.val().reserve.time.time < 30 && snapshot.val().reserve.distance.distance > 2500){
+            iconMarker = 'images/late.png';
+            console.log('red');
+            console.log('hi red '+t);
+            arr.push(t);
+            //firebase.database().ref('company/tourment_4/people/customers/'+t+'/notification').set(1);
+          }else{
+            iconMarker = 'images/intime.png';
+            console.log('green' + t);
+          }
+          t++;
+          //標氣球
+          var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(parseFloat(snapshot.val().curPos.lat), parseFloat(snapshot.val().curPos.lng)),
+            map: map,
+            draggable: true,
+            icon: iconMarker
+          });
+          //red----https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-32.png
+          //green--https://cdn3.iconfinder.com/data/icons/web-ui-color/128/Marker_green-32.png
+          aa=marker.getAnimation();
+          console.log(aa);
+          marker.addListener('click', function() {
+            if(aa !== undefined){
+              if(aa==this){
+                console.log(aa);
+              }else{
+                console.log(aa);
+                aa.setAnimation(null);
+                aa=this;
+                this.setAnimation(google.maps.Animation.BOUNCE);
+              }
+            }else{
+              this.setAnimation(google.maps.Animation.BOUNCE);
+              aa=this;
+              console.log('null');
+            }
+            document.getElementById("infoName").innerHTML = snapshot.val().name ;
+            document.getElementById("infoDis").innerHTML = snapshot.val().reserve.distance.distance + "m";
+          });
+
+        });
+      }
+    });
+  });
+
+
+  $('#infoSent').click(function(){
+    alert('notification all');
+    for (var i=1; i <= 5; i++){
+      firebase.database().ref('company/tourment_4/people/customers/'+i+'/notification').set(0);
+    }
+    console.log(arr.length);
+    for (var i=0; i <= arr.length; i++){
+      firebase.database().ref('company/tourment_4/people/customers/'+arr[i]+'/notification').set(1);
+    }
+
+  });
+
+}
+
+   function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+     infoWindow.setPosition(pos);
+     infoWindow.setContent(browserHasGeolocation ?
+                           'Error: The Geolocation service failed.' :
+                           'Error: Your browser doesn\'t support geolocation.');
+   }
+
+  <!--設定上排顏色-->
+    $('#sec3').css("color","#fff");
+    $('.breadcrumb').click(function(){
+      $(this).css("color","#fff");
+    });
+
+
+
+</script>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="js/materialize.js"></script>
+<script src="js/init.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap" async defer></script>
+  </body>
+
+</html>

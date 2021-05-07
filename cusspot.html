@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>景點介紹</title>
+
+  <!-- CSS  -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link rel="stylesheet" href="css/buttons.css">
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+  <script type="text/javascript" src="js/buttons.js"></script>
+</head>
+
+<style>
+a {
+    color:black;
+    font-size: 30px;
+    font-weight:800;
+}
+
+f {
+　font-family:sans-serif;
+  font-size:20px;
+  color: #004d40;
+}
+
+c{
+  font-size:1.5em;
+  color: #004d40;
+
+}
+
+h4{
+  font-family:Microsoft JhengHei;
+  font-weight: bold;
+  font-size:15px;
+  font-family:Microsoft JhengHei;
+  font-weight: bold;
+}
+
+h5{
+  font-family:Microsoft JhengHei;
+  font-weight: bold;
+}
+
+
+.button-border-set {
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -moz-transition-property: all;
+  -o-transition-property: all;
+  -webkit-transition-property: all;
+  transition-property: all;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  color: #FF7F51;
+  border: 2px solid #FF7F51;
+  background: none;
+  text-shadow: none; }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<body>
+
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="#" class="brand-logo"><img src="images/logo1.png" width="170" height="65"></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="new%204.html">旅遊行程</a></li>
+        <li><a href="index2.html">回到上一頁</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="new 4.html">旅遊行程</a></li>
+        <li><a href="index2.html">回到上一頁</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+<br>
+            <!-- <h5 class="row center"style="color:#009688 teal">code...</h5>
+     <div class="row">
+     <div class="row">
+       <div class="input-field col s12">
+         <input id="text1"  class="validate">
+
+       </div>
+     </div>
+ </div> -->
+
+ <!-- <div class="col s12">
+        <h5 class="row left" style="color:#004d40">code...  </h5>
+          <div class="input-field inline">
+            <input id="text1" class="validate">
+          </div>
+        </div> -->
+        <div><h5 class="row center"><img src="images/guidebook.png"></h5></div>
+        <center><h4>嗨 ! 您可以同步或是檢視景點導覽資訊 !</h4><br></center>
+
+      	  <!-- <div class="input-field col s12" style="padding:10px;margin-bottom:5px;" >
+          <div class="icon-block">
+              <h5 class="row left" style="color:#FF7F51">選擇區域</h5>
+         <select id="text2" class="browser-default">
+   <option value="1">佩托拉Petra</option>
+   <option value="2">瑪達巴Madaba</option>
+   <option value="3">凱撒利亞Caesarea</option>
+   <option value="4">拿撒勒Nazareth</option>
+     </select>
+          </div></div> -->
+
+
+                          <ul class="collection with-header" >
+                            <li class="collection-header"><h4   style="color:#FF7F51;font-weight: bold;font-size: 20px;font-family:Microsoft JhengHei;">選擇地點</h4></li>
+                            <li class="collection-item"><div>佩托拉Petra<a href="demo2.html" class="secondary-content"><i class="material-icons"style="color:#FF7F51">send</i></a></div></li>
+                            <li class="collection-item"><div>中興大學nchu<a href="demo3-2.html" class="secondary-content"><i class="material-icons"style="color:#FF7F51">send</i></a></div></li>
+                            <li class="collection-item"><div>高美濕地<a href="demo4-2.html" class="secondary-content"><i class="material-icons"style="color:#FF7F51">send</i></a></div></li>
+                            <li class="collection-item"><div>彩虹眷村<a href="#!" class="secondary-content"><i class="material-icons"style="color:#FF7F51">send</i></a></div></li>
+                          </ul>
+
+
+            <!-- <button type="button" id="submitBtn" onclick="submitClick()">submit</button> -->
+<!-- <span class="button-wrap" style="float:right;"><a class="button button-pill button-edit" id="submitBtn" style="float:right;height:35px;font-size:25px;" onclick="submitClick()">Check it out!</a></span> -->
+
+<!-- <a class="waves-effect waves-light btn-large"style="float:right;height:35px;font-size:20px;font-family:Microsoft JhengHei;font-weight: bold; height:40px;margin: 10px;background-color:#ff6d00;"onclick="submitClick()" >同步導覽</a><br><br> -->
+
+
+<!-- <div class="container">
+  <yes class="btn btn-info" data-toggle="collapse" data-target="#demo">Simple collapsible</yes>
+  <div id="demo" class="collapse">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </div>
+</div> -->
+
+
+
+
+<div id="nested"></div>
+
+
+<script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAke2WlnbKKYkn2z8igaG1R6Q-VJQmqxHM",
+    authDomain: "guideyout-d9ecf.firebaseapp.com",
+    databaseURL: "https://guideyout-d9ecf.firebaseio.com",
+    projectId: "guideyout-d9ecf",
+    storageBucket: "guideyout-d9ecf.appspot.com",
+    messagingSenderId: "93700300799"
+  };
+  firebase.initializeApp(config);
+</script>
+
+<script>
+// var mainText = document.getElementById("text1");
+var mainText2 = document.getElementById("text2");
+var submitBtn = document.getElementById("submitBtn");
+
+
+function submitClick(){
+document.location.href="demo2.html";
+}
+
+
+</script>
+
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="js/materialize.js"></script>
+<script src="js/init.js"></script>
+
+</body>
+</html>

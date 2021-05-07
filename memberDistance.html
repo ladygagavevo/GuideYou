@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+	  <title>遊客測試</title>
+	  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	  <meta charset="utf-8">
+	  <!-- CSS  -->
+	  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	  <link rel="stylesheet" type="text/css" href="sweetalert/dist/sweetalert.css">
+	  <link href="css/memberDistance.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	  <!-- 使用firebase -->
+	  <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+	  <!--使用google map-->
+	  <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap" async defer></script>
+	  <!--cordova js-->
+	  <script src="cordova.js"></script>
+	  <!--時間相關js-->
+	  <script src="script/Time.js"></script>
+	  <!--地圖相關js-->
+	  <script src="script/Map.js"></script>
+    <link rel="stylesheet" href="css/buttons.css">
+    <script type="text/javascript" src="js/buttons.js"></script>
+    </head>
+<style>
+h4{
+  font-family:Microsoft JhengHei;
+  font-weight: bold;
+  font-size:18px;
+}
+
+h5{
+  font-family:Microsoft JhengHei;
+  font-weight: bold;
+}
+</style>
+    <body>
+	  <nav class="white" role="navigation">
+	    <div class="nav-wrapper container">
+	      <a id="logo-container" href="#" class="brand-logo"><img src="images/logo1.png" width="170" height="65"></a>
+	      <ul class="right hide-on-med-and-down">
+          <li><a href="index.html">首頁</a></li>
+          <li><a href="memberDistance.html">集合頁面</a></li>
+          <li><a href="index2.html">回到上一頁</a></li>
+	      </ul>
+	      <ul id="nav-mobile" class="side-nav">
+          <li><a href="index.html">首頁</a></li>
+          <li><a href="memberDistance.html">集合頁面</a></li>
+          <li><a href="index2.html">回到上一頁</a></li>
+	      </ul>
+	      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+	    </div>
+	  </nav>
+      <br>
+      <!--show meet map-->
+  	  <div class="map" id="map"></div>
+      <br>
+      <!--show meet time-->
+	  <div class="col s12 m4" href="guideDistance.html">
+	      <div style="border:5px #FFAF87  solid;margin-right:10px;margin-left:10px;border-radius:  10px 10px 10px 10px;">
+		    <div class="icon-block">
+			  <!-- <h3 class="row center"><i class="small material-icons">settings_input_antenna</i></h3> -->
+			  <h5 class="row center" id="now_time"></h5>
+		    </div>
+	      </div>
+	  </div>
+	  <br>
+	  <!--show reserve time-->
+	  <div class="col s12 m4">
+        <div style="border:5px #FF8E72 solid;margin-right:10px;margin-left:10px;border-radius:  10px 10px 10px 10px;">
+		  <div class="icon-block">
+			  <!-- <h2 class="row center"><i class="small material-icons">schedule</i></h2> -->
+			  <h5 class="row center" id="reserveTime"></h5>
+		  </div>
+        </div>
+	  </div>
+	  <br>
+	  <!--show route-->
+      <div class="col s12 m4">
+        <div style="border:5px #BF8683  solid;margin-right:10px;margin-left:10px;border-radius:  10px 10px 10px 10px;">
+          <div class="icon-block">
+		    <!-- <h2 class="row center"><i class="small material-icons">schedule</i></h2> -->
+		    <h5 class="row center" id="route"></h5>
+		  </div>
+    	</div>
+    </div><br>
+      <a class="button button-block button-rounded button-edit button-large" name="reload" style="float:center;" onclick="javascript:window.location.reload()"><v class="material-icons">autorenew</v></a>
+      <!--提醒功能-->
+      <span id='remind'></span>
+
+	  <footer>
+      </footer>
+
+	  <script type="text/javascript">
+	   // Initialize Firebase
+		var config = {
+	      apiKey: "AIzaSyAke2WlnbKKYkn2z8igaG1R6Q-VJQmqxHM",
+	      authDomain: "guideyout-d9ecf.firebaseapp.com",
+	      databaseURL: "https://guideyout-d9ecf.firebaseio.com"
+	    };
+	   firebase.initializeApp(config);
+	   //全域變數--地圖
+	   var meetlocation,mylocation;
+	   var pos;
+	   var map;
+	   var directionsDisplay, directionsService,markerArray, stepDisplay;
+	   var distance=0;
+	   //全域變數--時間
+	   var now,hours,minutes,seconds,timeValue;//current variances
+	   var h,m;//meet time variances
+	   var rh,rm,totalM;//reserve time variances
+	   var meettime,meettimeValue;
+	   var posTime,posReTime;
+
+
+	   function initMap(){
+	     //初始預設的，會進入其他function，map放外面
+	     map = new google.maps.Map(document.getElementById('map'), {
+	       zoom: 17,
+	       center: {lat: 24.121438, lng: 120.675038 }
+	       });
+
+	     //要先預設好  防止Cannot read property 'setMap' of undefined
+	     meetlocation = new google.maps.Marker({
+	       position: {lat: 24.121438, lng: 120.675038 },
+	       animation: google.maps.Animation.DROP,
+	       map: map
+	       });
+
+	     //要先預設好  防止Cannot read property 'setMap' of undefined
+	     mylocation = new google.maps.Marker({
+	       position: {lat: 24.121438, lng: 120.675038 },
+	       map: map
+	       });
+	     console.log('153');
+	     getMyPosition();
+	     //從firebase找目前集合位置
+	     var meetRef = firebase.database().ref("company/tourment_4/meetlocation/now");
+	     //重新整理會先跳到這行，允許存取現在位置75行(navigator.geolocation)，才真正存到mylocation
+	     console.log(mylocation);
+	     //取值方法利用on釘住meetRef的值
+	     meetRef.on('value', function(data) {
+	       pos = {
+	         lat: data.val().meetLat,
+	         lng: data.val().meetLng
+	       };
+	       console.log(pos);
+	       //可能遇到javascript非同步問題
+	       //還在讀資料時就進入到下一行
+	       //利用setTimeout延遲
+	       //當釘住meetRef，執行on，需要更改meetlocation
+	       //原來放在外面的這裡執行不到
+	       setTimeout(function(){setMeetLocation();}, 100);
+
+	     });
+	     //第一次需要等待pos到正確的pos
+	     console.log(pos);
+	     setTimeout(function(){setMeetLocation();}, 100);
+
+	     Time();
+	     noticeAll();
+
+	   }
+
+	   //notice all
+	   function noticeAll(){
+	   	firebase.database().ref('company/tourment_4/people/customers/1/notification').on('value',function(snapshot){
+			if(snapshot.val() == 1){
+				cordova.plugins.notification.local.schedule({
+		          title: '集合提醒',
+		          text: '該回來囉來不及囉',
+		          foreground: true
+		        });
+			}
+	   	});
+	   }
+	   //利用watchPosition監聽位置
+	   function getMyPosition(){
+	     var optn = {
+	         enableHighAccuracy: true,
+	         timeout: Infinity,
+	         maximumAge: 0
+	       };
+	     if( navigator.geolocation ){
+	      navigator.geolocation.watchPosition(success, fail, optn);
+	     }else{
+	      // document.getElementById("msg").innerHTML = "無法偵測到經緯度座標";
+
+	     }
+	   }
+	   //成功抓到位置的話
+	   function success(position){
+	     //我的位置
+	     var posMy = {
+	       lat: position.coords.latitude,
+	       lng: position.coords.longitude
+	     }
+	     mylocation.setMap(null);
+	     mylocation = new google.maps.Marker({
+	       position: posMy,
+	       map: map
+	      });
+	     firebase.database().ref('company/tourment_4/people/customers/1/curPos').set(posMy);
+	     console.log('目前座標:'+ mylocation.position );
+	     //計算目前的距離
+	     calculateAndDisplayRoute();
+	   }
+
+	   function fail(error){
+	     // document.getElementById("msg").innerHTML = "error";
+	   }
+
+
+	   function setMeetLocation(){
+	     // 第一次setMeetLocation()的執行已經先延遲0.1秒了
+	     // 若recArray陣列最後一筆已經存在(非undefined)再用迴圈顯示所有資料
+	     if (typeof pos !== 'undefined') {
+	       console.log('meet location is: ('+pos.lat+","+pos.lng+")");
+	       //插旗子
+	       placeMarkerAndPanTo(pos, map);
+	       //算距離
+	       calculateAndDisplayRoute();
+
+	     }
+	     // 但若recArray陣列最後一筆還是不存在(undefined)就再延遲0.1秒再試試看囉
+	     else{
+	       setTimeout(function(){setMeetLocation();}, 100);
+	       console.log('pos+0.1s');
+	     }
+	   }
+
+	   //插旗子
+	   function placeMarkerAndPanTo(latLng, map){
+	     meetlocation.setMap(null);
+	     meetlocation = new google.maps.Marker({
+	       position: pos,
+	       animation: google.maps.Animation.DROP,
+	       // icon: 'map-icon-bar',
+	       map: map
+	       });
+	     map.panTo(latLng);
+	   }
+
+	   //算距離
+	   function calculateAndDisplayRoute() {
+	     // Instantiate a directions service.
+	     directionsService = new google.maps.DirectionsService;
+	     //計算距離
+	     markerArray = [];
+	     // Instantiate an info window to hold step text.
+	     stepDisplay = new google.maps.InfoWindow;
+
+	     // Retrieve the start and end locations and create a DirectionsRequest using
+	     // WALKING directions.
+	     console.log('mylocation is:'+mylocation);
+	     //directionsDisplay.setMap(null);
+	     //directionsDisplay.clear();
+
+	     directionsService.route({
+	       destination: meetlocation.position,
+	       origin: mylocation.position,
+	       travelMode: google.maps.TravelMode.WALKING
+	     }, function(response, status) {
+	       // Route the directions and pass the response to a function to create
+	       // markers for each step.
+	       if (status === google.maps.DirectionsStatus.OK) {
+	         console.log(response.routes[0].warnings);
+
+	         //清除原本路線
+	         if (directionsDisplay != null) {
+	             directionsDisplay.setMap(null);
+	             directionsDisplay = null;
+	             console.log('directionsDisplay!=null');
+	         }
+
+	         //因為之後需要先清除原本路線，在這裡才讀取
+	         // Create a renderer for directions and bind it to the map.
+	         directionsDisplay = new google.maps.DirectionsRenderer({map: map});
+
+	         //console.log(response);
+	         directionsDisplay.setDirections(response);
+	         //console.log('setMap setDirections');
+	         //directionsDisplay.setDirections(response);
+
+	         //計算總距離
+	         var myRoute = response.routes[0].legs[0];
+	         document.getElementById('route').innerHTML = '';   // 先清空warnings_panel內容文字
+	         //先歸零在進去算
+	         distance = 0;
+	         for (var i = 0; i < myRoute.steps.length; i++) {
+	         distance+=myRoute.steps[i].distance.value;
+	         }
+	         document.getElementById('route').innerHTML = '<b>路段距離:</b>' + distance  + '公尺<br />';
+	         //傳回一號遊客的剩餘距離
+	         firebase.database().ref('company/tourment_4/people/customers/1/reserve/distance/distance').set(distance);
+
+	         //showSteps(response, markerArray, stepDisplay, map);
+	       } else {
+	         window.alert('Directions request failed due to ' + status);
+	       }
+	     });
+
+	   }
+
+
+	   function Time(){
+	     //getMeetTime();
+	     getMeetReserveTime();
+	   }
+
+	 </script>
+
+
+	<script src="sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap" async defer></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="js/materialize.js"></script>
+    <script src="js/init.js"></script>
+  </body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>GUIDEYOU SIGN IN</title>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+    <style>
+      .button1 {
+        background-color:#26a69a;
+        color: white;
+        border: 2px solid #66CDAA;
+        border-radius: 5px;
+        font-size: 3em;
+      }
+
+      .button1:hover {
+        background-color:#66CDAA;
+        color: white;
+      }
+
+            input::-webkit-input-placeholder { /* WebKit browsers */
+      color:white;
+      font-size: 1.2em;
+      letter-spacing: 3px;
+      }
+
+    </style>
+  </head>
+  <body  background="images/33.jpg"tyle="background-repeat:no-repeat;background-attachment:fixed;background-position:center;">
+    <nav class="white" role="navigation">
+      <div class="nav-wrapper container">
+        <a id="logo-container" href="#" class="brand-logo"><img src="images/logo1.png" width="170" height="65"></a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="index.html">回到首頁</a></li>
+        </ul>
+
+        <ul id="nav-mobile" class="side-nav">
+          <li><a href="index.html">回到首頁</a></li>
+        </ul>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+      </div>
+    </nav>
+
+    <div style="margin-top:60px;margin-bottom:20px" class="row center"><img src="images/world.png"></div>
+    <div class="container">
+    	<section id="content">
+        <form action="index1.html" method="post">
+          <input type="text" name="username" id="username" placeholder="name" autocomplete="off" autofocus required />
+          <br>
+          <input type="password" name="password" id="password" placeholder="password" autocomplete="off" autofocus required />
+          <br>
+          <input type="submit" class="btn waves-effect waves-teal" style="float:right"value="LOGIN" />
+          <!-- <input type="button" class="button button1" onclick="window.open('new.jsp','_self')" value="註冊"/>
+          <input type="button" class="button button1" onclick="window.open('search.jsp','_self')" value="搜尋"/> -->
+      </section>
+    </div>
+
+
+    </form>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="js/materialize.js"></script>
+    <script src="js/init.js"></script>
+
+  </body>
+</html>

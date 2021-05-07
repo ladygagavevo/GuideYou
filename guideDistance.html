@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+  <head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>設定集合地點</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<!-- CSS  -->
+	  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link rel="stylesheet" type="text/css" href="sweetalert/dist/sweetalert.css">
+    <link rel="stylesheet" type="text/css" href="dist/timepicker.min.css">
+    <link href="css/guideDistance.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link rel="stylesheet" href="css/buttons.css">
+		<!-- 使用firebase -->
+		<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+		<!--使用google map-->
+		<!--<script src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap" async defer></script>-->
+		<!--時間相關js-->
+		<script src="script/Time.js"></script>
+		<!--地圖相關js-->
+		<script src="script/Map.js"></script>
+    <!--<script src="jquery-1.11.0.min.js"></script>-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="dist/timepicker.min.js"></script>
+    <!--<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>-->
+    <script type="text/javascript" src="js/buttons.js"></script>
+    <script>
+      $(document).ready(function(){
+        $(window).ready(function() { // 確認整個頁面讀取完畢再將這三個div隱藏起來
+          $("#status").fadeOut();
+          $("#loading_txt").fadeOut();
+          $("#preloader").delay(350).fadeOut("slow");
+        });
+     });
+    </script>
+
+  </head>
+
+  <style>
+
+  h4{
+    font-family:Microsoft JhengHei;
+    font-weight: bold;
+    font-size:18px;
+    font-family:Microsoft JhengHei;
+    font-weight: bold;
+  }
+
+  h5{
+    font-family:Microsoft JhengHei;
+    font-weight: bold;
+  }
+  #map{
+height: 85%;
+  }
+  </style>
+
+
+	<body>
+    <!--最上層-->
+		<nav class="white" role="navigation">
+		  <div class="nav-wrapper container">
+		    <a id="logo-container" href="#" class="brand-logo"><img src="images/logo1.png" width="170" height="65"></a>
+		    <ul class="right hide-on-med-and-down">
+          <li><a href="index.html">首頁</a></li>
+          <li><a href="guideDistance.html">設定集合地點</a></li>
+          <li><a href="revisebon.html">成員所在地點</a></li>
+          <li><a href="index1.html">回到導遊功能頁</a></li>
+		    </ul>
+		    <ul id="nav-mobile" class="side-nav">
+          <li><a href="index.html">首頁</a></li>
+          <li><a href="guideDistance.html">設定集合地點</a></li>
+          <li><a href="revisebon.html">成員所在地點</a></li>
+          <li><a href="index1.html">回到導遊功能頁</a></li>
+		    </ul>
+		    <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+		  </div>
+		</nav>
+    <!--第二層-->
+
+    <div id="preloader">
+      <div class="progress">
+          <div class="indeterminate"></div>
+      </div>
+    </div>
+<br>
+<div style="background:rgba(255,255,255,0.5);">
+  <input id="address" name="address" type="text" style="font-size:20px;font-family:Microsoft JhengHei;width:85%;" value="台中市南區中興大學"/>
+  <i class="small material-icons"  name="search" onclick="javascript:address2lat(meetlocation); "style="top:80%">search</i>
+    <h5>集合時間:<input id="setMeetTime" class="setMeetTime" type="time" style="font-size:20px;width:40%;">
+      <div class="button button-border-normal button-pill" style="font-size:20px;float:right;font-weight: bold;" onclick="javascript:sentMeet(xx);">Add</div>
+    </h5>
+</div>
+    <!--氣球顯示目前集合地點-->
+    <div id="map"></div>
+    <!--顯示目前集合時間-->
+    <div id="show_now_time">
+      <div style="position:absolute;top:87%;float:left;background:rgba(255,255,255, 0.6);margin:10px;border-style:double;">
+        <!-- <h4 style="float:left;"><b>目前集合時間</b><b id="now_time"></b> </h4> -->
+        <div id="now_time"></div>
+        <!-- <h4 ><b>目前集合地點</b></h4> -->
+        <div id="now_place"></div>
+      </div>
+    </div>
+
+    <span id="tab-1"></span>
+    <span id="tab-2"></span>
+    <div id="tab">
+      <!-- 頁籤按鈕 選擇tab -->
+      <ul>
+        <li><a href="#tab-2"><h5>設定</h5></a></li>
+        <li><a href="#tab-1" onclick="records()"><h5>紀錄</h5></a></li>
+      </ul>
+      <!-- 頁籤的內容區塊 -->
+      <div class="tab-content-1" style="margin:1px">
+
+
+        <!--選擇集合LOCATION-->
+<!--
+        <h1 style="font-size:1.8em;color:#031926;font-weight:bold;float:left;">Set Location</h1>
+        <input id="address" name="address" type="text" value="台中市南區中興大學" style="font-size:25px;width:90%;"/>
+        <i class="small material-icons"  name="search" onclick="javascript:address2lat(meetlocation);">search</i> -->
+
+
+        <!--選擇集合time-->
+        <!-- <div class="row">
+          <div class="input-field col s12">
+            <h1 style="font-size:1.8em;color:#031926;font-weight:bold;float:left;">Set Time</h1>
+            <input id="setMeetTime" class="setMeetTime" type="time" style="font-size:25px;width:50%;float:right;margin:10px;">
+          </div>
+        </div> -->
+
+        <!--送出 [新增和修改功能]-->
+        <!-- <div class="button button-border-normal button-pill" style="font-size:20px;float:right;" onclick="javascript:sentMeet(xx);"><center>Add</center></div><br><br>
+      </div> -->
+
+
+  			<div class="tab-content-2">
+  			  <div class="col s12">
+            <!-- <h5 class="row left" style="color:#004d40;font-size:35px">schedule...  </h5> -->
+            <div class="input-field inline"></div>
+          </div>
+        	<div id="textDiv">
+        		<div id="nested"></div>
+        	</div>
+  			</div>
+      </div>
+      <script type="text/javascript">
+      	// Initialize Firebase
+      	var config = {
+          apiKey: "AIzaSyAke2WlnbKKYkn2z8igaG1R6Q-VJQmqxHM",
+          authDomain: "guideyout-d9ecf.firebaseapp.com",
+          databaseURL: "https://guideyout-d9ecf.firebaseio.com"
+        };
+        firebase.initializeApp(config);
+
+        //全域變數--地圖
+        var meetlocation;
+        var geocoder;
+        //全域變數--時間
+        var now,hours,minutes,seconds,timeValue;//current variances
+        var h,m;//meet time variances
+        var rh,rm,totalM;//reserve time variances
+        //Time();
+        //先顯示目前資訊
+  	    var map;
+        //紀錄目前fix/add的num
+        var xx;
+        //套用這個時間
+        pickatime();
+        //input 顯示目前資訊
+        showInput();
+
+        function initMap() {
+          //初始預設的
+          map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 17,
+            center: {lat: 24.121438, lng: 120.675038 }
+          });
+          //查地址
+          geocoder = new google.maps.Geocoder();
+         //跳出顯示 是否允許存現在位置
+          if(navigator.geolocation){
+          //document.getElementById("msg").innerHTML = "偵測目前座標:<br>";
+          //取得現在位置getCurrentPosition
+            navigator.geolocation.getCurrentPosition(function(position){
+              var pos={
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+              };
+              map.setCenter(pos);
+              meetlocation = new google.maps.Marker({
+                position: pos,
+                map: map
+              });
+              //將經緯度透過 Google map Geocoder API 反查地址
+              lat2address(meetlocation);
+            });
+          }
+          map.addListener('click', function(e) {
+            placeMarkerAndPanTo(e.latLng, map);
+          });
+        }
+         //時間套件
+        function pickatime(){
+          $('.setMeetTime').pickatime({
+            default: 'now',
+            twelvehour: false, // change to 12 hour AM/PM clock from 24 hour
+            donetext: 'OK',
+            autoclose: false,
+            vibrate: true // vibrate the device when dragging clock hand
+          });
+        }
+        var numChildren;
+          //show the 預設資訊
+        function showInput(){
+          //顯示目前時間 adress
+          firebase.database().ref('company/tourment_4').once('value',function(snapshot){
+            document.getElementById('now_time').innerHTML = '<h4><font color="#1b5e20">' + snapshot.val().meettime.now.meetHour +':'+ snapshot.val().meettime.now.meetMin+ '</font><h4>';
+            document.getElementById('now_place').innerHTML = '<h4><font color="#1b5e20">' + snapshot.val().meetlocation.now.meetadress+ '</font><h4>';
+            console.log(snapshot.val().meetlocation);
+          });
+          //寫入時間
+          now = new Date();
+          hours = now.getHours();
+          minutes = now.getMinutes();
+          document.getElementById('setMeetTime').value =hours+':'+ minutes;
+          console.log('write time');
+          console.log('before');
+          //寫入num
+
+          firebase.database().ref('company/tourment_4/meetlocation').once('value',function(snapshot){
+            numChildren = snapshot.numChildren();
+            xx = numChildren;
+
+          });
+        }
+        //按下紀錄或者set 要改成現在的東西
+        var latlng;
+         function show_now(){
+          firebase.database().ref('company/tourment_4/meettime/now').once('value',function(snapshot){
+            document.getElementById('now_time').innerHTML = '<h4><font color="#008888">' + snapshot.val().meetHour +':'+ snapshot.val().meetMin+ '</font></h4>';
+          });
+           //案紀錄的時候 改地圖位置
+          firebase.database().ref('company/tourment_4/meetlocation/now').once('value',function(snapshot){
+            latlng = {
+              lat: snapshot.val().meetLat,
+              lng: snapshot.val().meetLng
+            }
+            placeMarkerAndPanTo(latlng,map);
+            console.log('update meet location now');
+            document.getElementById('now_place').innerHTML = '<h4><font color="#008888">' + snapshot.val().meetadress+ '</font></h4>';
+          });
+         }
+
+          //按下records出現的集合
+
+        function records(){
+          var str= ' ';
+          var x=1;
+          //限定10個集合地點
+          var num;
+          //顯示目前集合資訊
+          show_now();
+
+          //把目前氣球用調 變成現在集合的氣球
+          map.set(null);
+
+          firebase.database().ref('company/tourment_4/meetlocation').once('value',function(snapshot){
+          num = snapshot.numChildren();
+          console.log('num is'+num);
+
+          for(var i=1;i<num;i++){
+
+            var fuck = firebase.database().ref('company/tourment_4/meetlocation/'+i);
+            var fuck2 = firebase.database().ref('company/tourment_4/meettime/'+i);
+            //取得地址
+            fuck.once('value').then(function(snapshot) {
+              //如果沒被刪除 顯示出來
+              if(snapshot.val().del == 0){
+                str += '<button class="button button-flat-highlight" id="delete'+x+'" style="float:center;height:40px;width:30%;font-size:20px;margin:1px;" onclick="deleteMe('+x+')">Delete</button>  <button class="button button-flat-set" id="submitBtn'+x+'" style="float:center;height:40px;width:30%;font-size:20px;margin:1px;" onclick="set_now('+x+')">Set</button><a href="#tab-1"> <button class="button button-flat-edit" id="submitBtn'+x+'" style="float:center;height:40px;width:30%;font-size:20px;margin:1px;" onclick="revise('+x+')">Edit</button></a>'+'<h5>'+snapshot.val().meetadress +'</h5><br>';
+              }
+            });
+            //取得時間
+            fuck2.once('value').then(function(snapshot) {
+              //如果沒被刪除 顯示出來
+              if(snapshot.val().del == 0){
+                str += '<ss style="font-weight: bold;">'+'Meet Time '+'</ss>'+'<aa>'+snapshot.val().meetHour+':'+snapshot.val().meetMin+'</aa>'+'<hr><br>';
+              }
+              x++;
+              //顯示資訊
+              var div = document.getElementById("textDiv");
+              var nestedDiv = document.getElementById("nested");
+              nestedDiv.innerHTML = str;
+              var text = "[" + div.textContent + "]";
+            });
+          }
+        });
+      }
+          //按下新增
+        function sentMeet(x){
+          console.log('x is'+x);
+          setMeetplace(x);
+          setMeetTime(x);
+          //改完後要確定xx回來numChildren
+          //xx = numChildren;
+          xx++;
+          console.log('xx is'+xx);
+        }
+          //按下fix
+        function revise(x){
+          var fuck = firebase.database().ref('company/tourment_4/meetlocation/'+x);
+          //add紐(xx) 變成 目前修正這筆
+          xx = x;
+          fuck.once('value').then(function(snapshot) {
+            document.getElementById('address').value = snapshot.val().meetadress;
+            var latlng = new google.maps.LatLng(snapshot.val().meetLat, snapshot.val().meetLng);
+            meetlocation.setPosition(latlng);
+            map.setCenter(latlng);
+            console.log(snapshot.val().meetLat);
+            console.log(123);
+          });
+          var fuck2 = firebase.database().ref('company/tourment_4/meettime/'+x);
+          fuck2.once('value').then(function(snapshot) {
+            document.getElementById('setMeetTime').value = snapshot.val().meetHour+':'+snapshot.val().meetMin;
+          });
+          console.log('www');
+          //顯示目前集合資訊
+
+        }
+          //*刪除節點有問題
+        function deleteMe(x){
+          console.log('delete'+x);
+          firebase.database().ref('company/tourment_4/meetlocation/'+x+'/del').set(1);
+          console.log('delete:'+x+'location');
+          firebase.database().ref('company/tourment_4/meettime/'+x+'/del').set(1);
+          console.log('delete:'+x+'time');
+          window.history.go(0);
+        }
+        //按下set
+        function set_now(x){
+          var fuck = firebase.database().ref('company/tourment_4/meetlocation/'+x);
+          fuck.once('value').then(function(snapshot) {
+            firebase.database().ref('company/tourment_4/meetlocation/now').set({
+              meetLat: snapshot.val().meetLat,
+              meetLng: snapshot.val().meetLng,
+              meetadress: snapshot.val().meetadress
+            });
+          });
+
+          var fuck2 = firebase.database().ref('company/tourment_4/meettime/'+x);
+          fuck2.once('value').then(function(snapshot) {
+            console.log('p:');
+            postfuck5 = {
+              des5: snapshot.val().meetHour,
+              nes5: snapshot.val().meetMin
+            }
+            firebase.database().ref('company/tourment_4/meettime/now').set({
+            meetHour: postfuck5.des5,
+            meetMin: postfuck5.nes5
+            });
+          });
+          swal({
+            title: "目前集合資訊",
+            imageUrl: "https://cdn3.iconfinder.com/data/icons/flat-icons-web/40/Urgent_02-128.png",
+            timer: 2000,
+            showConfirmButton: false
+          });
+          //顯示目前集合資訊
+          show_now();
+          //$('#submitBtn'+x).css('background-color','yellow');
+        }
+
+
+
+
+
+      </script>
+    <script src="sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap" async defer></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="js/materialize.js"></script>
+    <script src="js/init.js"></script>
+  </body>
+
+</html>

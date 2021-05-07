@@ -1,0 +1,294 @@
+
+
+
+
+<!DOCTYPE html>
+<head>
+  <title>與遊客聊聊</title>
+  <!-- CSS  -->
+  <!-- <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
+<!-- <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script> -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  </script>
+  <!-- <meta name="robots" content="noindex"> -->
+  <script>try{Typekit.load({ async: true });}catch(e){}</script>
+  <!--引入字體-->
+  <!-- <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light" rel="stylesheet"> -->
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+<!--import firebase-->
+<script src="https://cdn.firebase.com/v0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+<meta charset='UTF-8'>
+<!-- <meta name="robots" content="noindex"> -->
+<!-- <link rel="shortcut icon" type="image/x-icon" href="https://production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" /> -->
+<!-- <link rel="mask-icon" type="" href="https://production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" /> -->
+
+</head>
+
+<style>
+#frame {
+  width: 100%;
+  /* min-width: 360px; */
+  height:-webkit-fill-available;
+  /* min-height: 300px; */
+  background:#ffe0b2 ;
+}
+#frame .content .messages {
+    height: auto;
+    /* min-height: calc(50% - 93px);
+    max-height: calc(50% - 93px); */
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+}
+#frame .content .messages::-webkit-scrollbar {
+width: 8px;
+background: transparent;
+}
+#frame .content .messages::-webkit-scrollbar-thumb {
+background-color: rgba(0, 0, 0, 0.3);
+}
+#frame .content .messages ul li {
+display: inline-block;
+clear: both;
+float: left;
+margin: 15px 15px -20px 9px;
+width: calc(100% - 25px);
+font-size: 0.9em;
+}
+#frame .content .messages ul li:nth-last-child(1) {
+margin-bottom: 20px;
+}
+#frame .content .messages ul li.sent img {
+margin: 6px 0px 10px 10px;
+float: right;
+}
+#frame .content .messages ul li.sent p {
+background:#e65100 ;
+color: #f5f5f5;
+float: right;
+font-size: 20px;
+}
+#frame .content .messages ul li.replies img {
+
+margin: 6px 10px 0 5px;
+}
+#frame .content .messages ul li.replies p {
+background: #f5f5f5;
+font-size: 20px;
+}
+#frame .content .messages ul li img {
+width: 60px;
+border-radius: 50%;
+float: left;
+margin: 3px;
+}
+#frame .content .messages ul li p {
+display: inline-block;
+padding: 1px 15px;
+border-radius: 15px;
+max-width: 130%;
+line-height: 40px;
+font-size: 50px;
+}
+
+</style>
+<body>
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="#" class="brand-logo"><img src="images/logo1.png" width="170" height="65"></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="index2.html">回上一頁</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="index2.html">回上一頁</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+
+<div id="frame">
+  <!--<div id="sidepanel">
+    <div id="profile">
+
+    </div>
+  </div>-->
+  <div class="content">
+
+    <div class="contact-profile">
+      <a href="index2.html">
+      <i class="fa fa-chevron-left" id="back" ></i>
+
+      <!-- <img src="images/logo1.png" > -->
+      </a>
+    </div>
+
+
+    <div class="messages" id="messages">
+      <ul>
+        <li class="replies">
+          <img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
+          <p>hello I am your guide!</p>
+        </li>
+        <li class="sent">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9sILVyHDvTygSBON_VnvQnmWhQ--S-aqFEwHUyTyrZohm3r8LHw" alt="" />
+          <p>my name is christine~</p>
+        </li>
+
+      </ul>
+    </div>
+
+
+    <div class="message-input">
+      <div class="wrap">
+<div class="row">
+    <div class="input-field col s12">
+        <input type="text" placeholder="訊息..." class="materialize-textarea" style="font-size:2em;width:87%;height:50px;background-color:white;" />
+        <button class="submit" style="float:right;background-color:#e65100;width:13%;height:50px"><i class="small material-icons">edit</i></button>
+      </div>
+    </div>
+</div>
+
+      </div>
+    </div>
+    <!-- <div class="message-input">
+      <div class="wrap">
+<div class="row">
+    <div class="input-field col s12">
+        <input type="text" placeholder="Write message..." class="materialize-textarea" style="font-size:4em;width:85%;height:100px;background-color:white;" />
+        <button class="submit" style="float:right;background-color:#ff6d00;height:120px"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+      </div>
+    </div>
+</div>
+
+      </div> -->
+  </div>
+
+
+<script src='https://production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script>
+<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+
+
+<script>
+  // connect firebase
+  var config = {
+    apiKey: "AIzaSyAke2WlnbKKYkn2z8igaG1R6Q-VJQmqxHM",
+    authDomain: "guideyout-d9ecf.firebaseapp.com",
+    databaseURL: "https://guideyout-d9ecf.firebaseio.com"
+  };
+  firebase.initializeApp(config);
+  var ref = firebase.database().ref('company/tourment_4/people/customers/1/talk');
+  var numTalks;
+  var talk;
+  ref.on("child_added", function(snap) {
+  //use in member side
+    if(snap.val().type == 'guide'){
+      //chatItem.style.color = "red";
+      $('<li class="replies"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>' + snap.val().msg + '</p></li>').appendTo($('.messages ul'));
+      $('.message-input input').val(null);
+      $('.contact.active .preview').html('<span>You: </span>' + JSON.stringify(snap.val().msg));
+      $(".messages").animate({ scrollTop: $(document).height() }, "fast");
+
+    }else{
+      //chatItem.style.color = "blue";
+      $('<li class="sent"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9sILVyHDvTygSBON_VnvQnmWhQ--S-aqFEwHUyTyrZohm3r8LHw" alt="" /><p>' + snap.val().msg + '</p></li>').appendTo($('.messages ul'));
+      $('.message-input input').val(null);
+      $('.contact.active .preview').html('<span>You: </span>' + JSON.stringify(snap.val().msg));
+      $(".messages").animate({ scrollTop: $(document).height() }, "fast");
+    }
+  });
+  /*ref.on("child_removed", function(snap) {
+    var item = document.getElementById(snap.name());
+    item.parentNode.removeChild(item);
+    document.getElementById('messages').innerHTML = '<ul></ul>';
+  });*/
+
+  ref.on("value", function(snapshot) {
+      console.log("There are "+snapshot.numChildren()+" messages");
+      numTalks = snapshot.numChildren();
+    });
+
+
+  $('.submit').click(function() {
+    newMessage();
+    console.log('new');
+  });
+
+</script>
+<script >
+$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+
+$("#profile-img").click(function() {
+  $("#status-options").toggleClass("active");
+});
+
+$(".expand-button").click(function() {
+  $("#profile").toggleClass("expanded");
+  $("#contacts").toggleClass("expanded");
+});
+
+$("#status-options ul li").click(function() {
+  $("#profile-img").removeClass();
+  $("#status-online").removeClass("active");
+  $("#status-away").removeClass("active");
+  $("#status-busy").removeClass("active");
+  $("#status-offline").removeClass("active");
+  $(this).addClass("active");
+
+  if($("#status-online").hasClass("active")) {
+    $("#profile-img").addClass("online");
+  } else if ($("#status-away").hasClass("active")) {
+    $("#profile-img").addClass("away");
+  } else if ($("#status-busy").hasClass("active")) {
+    $("#profile-img").addClass("busy");
+  } else if ($("#status-offline").hasClass("active")) {
+    $("#profile-img").addClass("offline");
+  } else {
+    $("#profile-img").removeClass();
+  };
+
+  $("#status-options").removeClass("active");
+});
+
+function newMessage() {
+  message = $(".message-input input").val();
+  if($.trim(message) == '') {
+    return false;
+  }
+
+  //$('<li class="sent"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>' + message + '</p></li>').appendTo($('.messages ul'));
+  //$('.message-input input').val(null);
+  //$('.contact.active .preview').html('<span>You: </span>' + message);
+  //$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+
+  //put in the talk array
+  numTalks++;
+  talk = {
+    type: 'member',
+    msg: message
+  }
+  ref.push(talk);
+
+};
+
+$(window).on('keydown', function(e) {
+  if (e.which == 13) {
+    newMessage();
+    return false;
+  }
+});
+//# sourceURL=pen.js
+</script>
+
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="js/materialize.js"></script>
+<script src="js/init.js"></script>
+
+
+
+</body>
+</html>
